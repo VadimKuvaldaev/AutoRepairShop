@@ -3,6 +3,7 @@ using AutoRepairShop.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AutoRepairShop.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260219060922_CarModel")]
+    partial class CarModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -78,7 +81,7 @@ namespace AutoRepairShop.Migrations
                     b.ToTable("Clients");
                 });
 
-            modelBuilder.Entity("AutoRepairShop.Model.ModelCar", b =>
+            modelBuilder.Entity("AutoRepairShop.Model.Model", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -91,7 +94,7 @@ namespace AutoRepairShop.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ModelsCars");
+                    b.ToTable("Model");
                 });
 
             modelBuilder.Entity("AutoRepairShop.Model.Car", b =>
@@ -100,7 +103,7 @@ namespace AutoRepairShop.Migrations
                         .WithMany("Cars")
                         .HasForeignKey("ClientId");
 
-                    b.HasOne("AutoRepairShop.Model.ModelCar", "Model")
+                    b.HasOne("AutoRepairShop.Model.Model", "Model")
                         .WithMany("Cars")
                         .HasForeignKey("ModelID")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -114,7 +117,7 @@ namespace AutoRepairShop.Migrations
                     b.Navigation("Cars");
                 });
 
-            modelBuilder.Entity("AutoRepairShop.Model.ModelCar", b =>
+            modelBuilder.Entity("AutoRepairShop.Model.Model", b =>
                 {
                     b.Navigation("Cars");
                 });
