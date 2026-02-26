@@ -7,6 +7,6 @@ namespace AutoRepairShop.Data
     {
         public DbSet<Car> Cars { get; set; }
         public DbSet<Client> Clients { get; set; }
-        public DbSet<ModelCar> ModelsCars { get; set; }
+        public DbSet<BrandCar> ModelsCars { get; set; }
     }
 }
