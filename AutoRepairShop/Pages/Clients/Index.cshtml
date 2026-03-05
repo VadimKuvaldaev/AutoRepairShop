@@ -1,0 +1,32 @@
+﻿@page
+@model AutoRepairShop.Pages.Clients.IndexModel
+@{
+}
+
+<h1>Список клиентов</h1>
+
+<table border="1" cellpadding="5">
+    <thead>
+        <tr>
+            <th>Фамилия и имя</th>
+            <th>Телефон</th>
+            <th>Email</th>
+            <th>Автомобиль</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var client in Model.Clients)
+        {
+            <tr>
+                <td>@client.FullName</td>
+                <td>@client.NumberPhone</td>
+                <td>@client.Email</td>
+                <td>@client.Cars</td>                
+                <td>
+                    <a asp-page="Details" asp-route-id="@client.Id">Открыть</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
