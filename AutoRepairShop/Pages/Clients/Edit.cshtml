@@ -1,0 +1,13 @@
+﻿@page "{id:int}"
+@model AutoRepairShop.Pages.Clients.EditModel
+
+<form method="post">
+    <input type="hidden" asp-for="Client.Id" />
+
+    <input asp-for="Client.FullName" />
+    <input asp-for="Client.NumberPhone" />
+    <input asp-for="Client.Email" />
+    <input asp-for="Client.Cars" />
+
+    <button type="submit">Сохранить</button>
+</form>
