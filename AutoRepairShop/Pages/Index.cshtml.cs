@@ -1,9 +1,8 @@
 using AutoRepairShop.Data;
-using AutoRepairShop.Model;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace AutoRepairShop.Pages.Cars
+namespace AutoRepairShop.Pages
 {
     public class IndexModel : PageModel
     {
@@ -15,11 +14,10 @@ namespace AutoRepairShop.Pages.Cars
             _logger = logger;
             _context = context;
         }
-        public List<Car> Cars { get; set; }
 
         public void OnGet()
         {
-            Cars = _context.Cars.ToList();
+
         }
     }
 }

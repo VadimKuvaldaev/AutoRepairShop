@@ -13,6 +13,7 @@
         <tr>
             <th>Марка</th>
             <th>Модель</th>
+            <th>Номер модели</th>
             <th>Год</th>
             <th>Владелец</th>
             <th></th>
@@ -22,7 +23,7 @@
         @foreach (var car in Model.Cars)
         {
             <tr>
-                <td>@car.Brand</td>
+                <td>@car.Brand.Name</td>
                 <td>@car.ModelCar</td>
                 <td>@car.ModelID</td>
                 <td>@car.Year</td>

@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AutoRepairShop.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260219060922_CarModel")]
-    partial class CarModel
+    [Migration("20260312063107_UpdateDBCar")]
+    partial class UpdateDBCar
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,22 @@ namespace AutoRepairShop.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("AutoRepairShop.Model.BrandCar", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ModelsCars");
+                });
+
             modelBuilder.Entity("AutoRepairShop.Model.Car", b =>
                 {
                     b.Property<int>("Id")
@@ -32,11 +48,14 @@ namespace AutoRepairShop.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Brand")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("BrandId")
+                        .HasColumnType("int");
 
                     b.Property<int?>("ClientId")
                         .HasColumnType("int");
+
+                    b.Property<string>("ModelCar")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("ModelID")
                         .HasColumnType("int");
@@ -52,9 +71,9 @@ namespace AutoRepairShop.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ClientId");
+                    b.HasIndex("BrandId");
 
-                    b.HasIndex("ModelID");
+                    b.HasIndex("ClientId");
 
                     b.ToTable("Cars");
                 });
@@ -70,6 +89,9 @@ namespace AutoRepairShop.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("FullName")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
@@ -81,43 +103,27 @@ namespace AutoRepairShop.Migrations
                     b.ToTable("Clients");
                 });
 
-            modelBuilder.Entity("AutoRepairShop.Model.Model", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Model");
-                });
-
             modelBuilder.Entity("AutoRepairShop.Model.Car", b =>
                 {
+                    b.HasOne("AutoRepairShop.Model.BrandCar", "Brand")
+                        .WithMany("Cars")
+                        .HasForeignKey("BrandId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("AutoRepairShop.Model.Client", null)
                         .WithMany("Cars")
                         .HasForeignKey("ClientId");
 
-                    b.HasOne("AutoRepairShop.Model.Model", "Model")
-                        .WithMany("Cars")
-                        .HasForeignKey("ModelID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Model");
+                    b.Navigation("Brand");
                 });
 
-            modelBuilder.Entity("AutoRepairShop.Model.Client", b =>
+            modelBuilder.Entity("AutoRepairShop.Model.BrandCar", b =>
                 {
                     b.Navigation("Cars");
                 });
 
-            modelBuilder.Entity("AutoRepairShop.Model.Model", b =>
+            modelBuilder.Entity("AutoRepairShop.Model.Client", b =>
                 {
                     b.Navigation("Cars");
                 });
