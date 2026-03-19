@@ -15,7 +15,6 @@
             <th>Фамилия и имя</th>
             <th>Телефон</th>
             <th>Email</th>
-            <th>Автомобиль</th>
             <th></th>
         </tr>
     </thead>
@@ -25,8 +24,7 @@
             <tr>
                 <td>@client.FullName</td>
                 <td>@client.NumberPhone</td>
-                <td>@client.Email</td>
-                <td>@client.Cars</td>                
+                <td>@client.Email</td>                               
                 <td>
                     <a asp-page="Details" asp-route-id="@client.Id">Открыть</a>
                     <a asp-page="Edit" asp-route-id="@client.Id">Изменить</a>

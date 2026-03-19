@@ -2,6 +2,7 @@ using AutoRepairShop.Data;
 using AutoRepairShop.Model;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 
 namespace AutoRepairShop.Pages.Cars
 {
@@ -19,7 +20,10 @@ namespace AutoRepairShop.Pages.Cars
 
         public IActionResult OnGet(int id)
         {
-            Car = _context.Cars.Find(id);
+            Car = _context.Cars
+                .Where(c => c.Id == id)
+                .Include(c => c.Brand)
+                .FirstOrDefault();
 
             if (Car == null)
                 return NotFound();

@@ -2,6 +2,7 @@ using AutoRepairShop.Data;
 using AutoRepairShop.Model;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 
 namespace AutoRepairShop.Pages.Clients
 {
