@@ -1,8 +1,10 @@
 using AutoRepairShop.Data;
+using AutoRepairShop.Model;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 
-namespace AutoRepairShop.Pages
+namespace AutoRepairShop.Pages.Cars
 {
     public class IndexModel : PageModel
     {
@@ -14,10 +16,11 @@ namespace AutoRepairShop.Pages
             _logger = logger;
             _context = context;
         }
+        public List<Car> Cars { get; set; }
 
         public void OnGet()
         {
-
+            Cars = _context.Cars.Include(c => c.Brand).ToList();
         }
     }
 }

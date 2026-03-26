@@ -2,8 +2,9 @@
 {
     public class Car : EFModel
     {
-        public string? Brand { get; set; }
-        public string? Model { get; set; }
+        public BrandCar Brand { get; set; } = new BrandCar();
+        public string ModelCar { get; set; } = "";       
+        public int ModelID { get; set; }
         public int Year { get; set; }
         public string? Owner { get; set; }
     }

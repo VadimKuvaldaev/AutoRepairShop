@@ -1,0 +1,37 @@
+﻿@page
+@model AutoRepairShop.Pages.Cars.CreateModel
+@{
+}
+<h1>Добавить автомобиль</h1>
+
+<form method="post">
+    <div>
+        <label>Марка</label><br />
+        <input asp-for="Car.Brand.Name" />
+        <span asp-validation-for="Car.Brand"></span>
+    </div>
+
+    <div>
+        <label>Модель</label><br />
+        <input asp-for="Car.ModelCar" />
+    </div>
+
+    <div>
+        <label>Номер модели</label><br />
+        <input asp-for="Car.ModelID" type="number" />
+    </div>
+
+    <div>
+        <label>Год</label><br />
+        <input asp-for="Car.Year" type="number" />
+    </div>
+
+    <div>
+        <label>Владелец</label><br />
+        <input asp-for="Car.Owner"  />
+    </div>
+
+    <button type="submit">Сохранить</button>
+</form>
+
+<a asp-page="Index">Назад</a>
