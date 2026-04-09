@@ -3,6 +3,7 @@ using AutoRepairShop.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AutoRepairShop.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260409052610_UpdateDB")]
+    partial class UpdateDB
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -35,7 +38,7 @@ namespace AutoRepairShop.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("BrandCars", (string)null);
+                    b.ToTable("BrandCars");
                 });
 
             modelBuilder.Entity("AutoRepairShop.Model.Car", b =>
@@ -69,7 +72,7 @@ namespace AutoRepairShop.Migrations
 
                     b.HasIndex("ClientId");
 
-                    b.ToTable("Cars", (string)null);
+                    b.ToTable("Cars");
                 });
 
             modelBuilder.Entity("AutoRepairShop.Model.Client", b =>
@@ -93,15 +96,14 @@ namespace AutoRepairShop.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("NumberPhone")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("NumberPhone")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ClientCarId");
 
-                    b.ToTable("Clients", (string)null);
+                    b.ToTable("Clients");
                 });
 
             modelBuilder.Entity("AutoRepairShop.Model.ClientCar", b =>
@@ -118,7 +120,7 @@ namespace AutoRepairShop.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ClientCars", (string)null);
+                    b.ToTable("ClientCars");
                 });
 
             modelBuilder.Entity("AutoRepairShop.Model.Car", b =>

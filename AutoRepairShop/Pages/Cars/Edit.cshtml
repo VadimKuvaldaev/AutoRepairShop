@@ -1,33 +1,67 @@
 ﻿@page "{id:int}"
 @model AutoRepairShop.Pages.Cars.EditModel
 @{
+    ViewData["Title"] = "Редактировать авто";
 }
-<h1>Редактировать автомобиль</h1>
 
-<form method="post">
-    <input type="hidden" asp-for="Car.Id" />
+<div class="container mt-4">
 
-    <div>
-        <label>Марка</label><br />
-        <input asp-for="Car.Brand.Name" />
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+
+            <div class="card shadow-sm">
+
+                <div class="card-header bg-warning text-dark">
+                    <h4 class="mb-0">Редактировать авто</h4>
+                </div>
+
+                <div class="card-body">
+
+                    <form method="post">
+
+                        <input type="hidden" asp-for="Car.Id" />
+
+                        <div class="mb-3">
+                            <label asp-for="Car.Brand" class="form-label">Марка</label>
+                            <input asp-for="Car.Brand" class="form-control" />
+                            <span asp-validation-for="Car.Brand" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Car.ModelCar" class="form-label">Модель</label>
+                            <input asp-for="Car.ModelCar" class="form-control" />
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Car.Year" class="form-label">Год</label>
+                            <input asp-for="Car.Year" type="number" class="form-control" />
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Car.Client.Name" class="form-label">Владелец</label>
+                            <input asp-for="Car.Client.Name" type="number" class="form-control" />
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <a asp-page="Index" class="btn btn-secondary">
+                                Назад
+                            </a>
+                            <button type="submit" class="btn btn-warning">
+                                Сохранить
+                            </button>
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
     </div>
 
-    <div>
-        <label>Модель</label><br />
-        <input asp-for="Car.ModelCar" />
-    </div>
+</div>
 
-    <div>
-        <label>Год</label><br />
-        <input asp-for="Car.Year" type="number" />
-    </div>
-
-    <div>
-        <label>Владелец</label><br />
-        <input asp-for="Car.Client" />
-    </div>
-
-    <button type="submit">Сохранить</button>
-</form>
-
-<a asp-page="Index">Назад</a>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

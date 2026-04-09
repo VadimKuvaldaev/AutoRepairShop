@@ -23,7 +23,8 @@
 
     <div>
         <label>Владелец</label><br />
-        <input asp-for="Car.Client"  />
+        <input asp-for="Car.Client.Name"  />
+        <span asp-validation-for="Car.Client"></span>
     </div>
 
     <button type="submit">Сохранить</button>

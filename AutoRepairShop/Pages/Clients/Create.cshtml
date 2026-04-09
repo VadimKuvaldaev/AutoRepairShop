@@ -2,25 +2,48 @@
 @model AutoRepairShop.Pages.Clients.CreateModel
 @{
 }
-<h1>Добавить клиента</h1>
+<h1 class="mb-4">Добавить клиента</h1>
 
-<form method="post">
-    <div>
-        <label>Фамилия и имя</label><br />
-        <input asp-for="Client.FullName" />
+<div class="row">
+    <div class="col-md-6">
+        <form method="post">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label asp-for="Client.FullName" class="form-label"></label>
+                        <input asp-for="Client.FullName" class="form-control" />
+                        <span asp-validation-for="Client.FullName" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Client.Email" class="form-label"></label>
+                        <input asp-for="Client.Email" class="form-control" />
+                        <span asp-validation-for="Client.Email" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Client.NumberPhone" class="form-label"></label>
+                        <input asp-for="Client.NumberPhone" class="form-control" />
+                        <span asp-validation-for="Client.NumberPhone" class="text-danger"></span>
+                    </div>                    
+
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-primary">
+                            Сохранить
+                        </button>
+
+                        <a asp-page="Index" class="btn btn-secondary">
+                            Назад
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </form>
     </div>
+</div>
 
-    <div>
-        <label>Номер телефона</label><br />
-        <input asp-for="Client.NumberPhone" />
-    </div>
-
-    <div>
-        <label>Email</label><br />
-        <input asp-for="Client.Email" />
-    </div>    
-
-    <button type="submit">Сохранить</button>
-</form>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
 
 
