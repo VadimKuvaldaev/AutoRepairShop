@@ -1,33 +1,121 @@
 ﻿@page
 @model AutoRepairShop.Pages.Cars.CreateModel
 @{
+    ViewData["Title"] = "Новый автомобиль";
 }
-<h1>Добавить автомобиль</h1>
 
-<form method="post">
-    <div>
-        <label>Марка</label><br />
-        <input asp-for="Car.Brand.Name" />
-        <span asp-validation-for="Car.Brand"></span>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+
+            <div class="mb-4 text-center">
+                <div class="display-6 text-success mb-2">🚗✨</div>
+                <h2 class="fw-bold">Постановка на учет</h2>
+                <p class="text-muted">Введите данные автомобиля для привязки к базе сервиса</p>
+            </div>
+
+            <div class="card border-0 shadow-sm overflow-hidden">
+                <div class="bg-success p-2 opacity-75"></div>
+
+                <div class="card-body p-4 p-md-5">
+                    <form method="post">
+
+                        <div class="row">
+                            <div class="col-md-7 mb-4">
+                                <label asp-for="Car.Brand" class="form-label fw-semibold text-secondary small text-uppercase ls-1">Марка</label>
+                                <div class="input-group transition-all">
+                                    <span class="input-group-text bg-light border-end-0 text-muted">🏭</span>
+                                    <input asp-for="Car.Brand.Name" class="form-control border-start-0 ps-0" placeholder="Например: BMW" />
+                                </div>
+                                <span asp-validation-for="Car.Brand" class="text-danger small d-block mt-1"></span>
+                            </div>
+
+                            <div class="col-md-5 mb-4">
+                                <label asp-for="Car.Year" class="form-label fw-semibold text-secondary small text-uppercase ls-1">Год выпуска</label>
+                                <div class="input-group transition-all">
+                                    <span class="input-group-text bg-light border-end-0 text-muted">📅</span>
+                                    <input asp-for="Car.Year" type="number" class="form-control border-start-0 ps-0" placeholder="2024" />
+                                </div>
+                                <span asp-validation-for="Car.Year" class="text-danger small d-block mt-1"></span>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label asp-for="Car.ModelCar" class="form-label fw-semibold text-secondary small text-uppercase ls-1">Модель</label>
+                            <div class="input-group transition-all">
+                                <span class="input-group-text bg-light border-end-0 text-muted">🚘</span>
+                                <input asp-for="Car.ModelCar" class="form-control border-start-0 ps-0" placeholder="Например: X5 M" />
+                            </div>
+                            <span asp-validation-for="Car.ModelCar" class="text-danger small d-block mt-1"></span>
+                        </div>
+
+                        <div class="mb-4">
+                            <label asp-for="Car.Client" class="form-label fw-semibold text-secondary small text-uppercase ls-1">Владелец</label>
+                            <div class="input-group shadow-sm-hover transition-all">
+                                <span class="input-group-text bg-light border-end-0 text-muted">👤</span>
+                                <select asp-for="Car.Client.Name" asp-items="Model.ClientList" class="form-select border-start-0 ps-0">
+                                    <option value="">-- Выберите клиента из списка --</option>
+                                </select>
+                            </div>
+                            <span asp-validation-for="Car.Client" class="text-danger small d-block mt-1"></span>
+                        </div>
+
+                        <div class="d-grid gap-2 mt-5">
+                            <button type="submit" class="btn btn-success btn-lg shadow-sm fw-bold py-3">
+                                Создать запись
+                            </button>
+                            <a asp-page="Index" class="btn btn-link text-muted text-decoration-none small mt-2">
+                                ← Вернуться в автопарк
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="alert alert-info border-0 shadow-sm mt-4 p-3 small">
+                <strong>Совет:</strong> Если владельца еще нет в базе, сначала создайте карточку клиента в разделе «Клиенты».
+            </div>
+
+        </div>
     </div>
+</div>
 
-    <div>
-        <label>Модель</label><br />
-        <input asp-for="Car.ModelCar" />
-    </div>
+<style>
+    .ls-1 {
+        letter-spacing: 0.5px;
+    }
 
-    <div>
-        <label>Год</label><br />
-        <input asp-for="Car.Year" type="number" />
-    </div>
+    .card {
+        border-radius: 1.25rem;
+    }
 
-    <div>
-        <label>Владелец</label><br />
-        <input asp-for="Car.Client.Name"  />
-        <span asp-validation-for="Car.Client"></span>
-    </div>
+    .btn-lg {
+        border-radius: 12px;
+        transition: transform 0.2s;
+    }
 
-    <button type="submit">Сохранить</button>
-</form>
+        .btn-lg:active {
+            transform: scale(0.98);
+        }
 
-<a asp-page="Index">Назад</a>
+    .input-group-text {
+        border-color: #dee2e6;
+    }
+
+    .form-control {
+        border-color: #dee2e6;
+    }
+
+        .form-control:focus {
+            border-color: #198754;
+            box-shadow: 0 0 0 0.25rem rgba(25, 135, 84, 0.1);
+        }
+
+    .transition-all {
+        transition: all 0.2s ease;
+    }
+</style>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

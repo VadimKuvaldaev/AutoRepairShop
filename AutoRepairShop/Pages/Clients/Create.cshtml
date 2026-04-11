@@ -1,49 +1,104 @@
 ﻿@page
 @model AutoRepairShop.Pages.Clients.CreateModel
 @{
+    ViewData["Title"] = "Новый клиент";
 }
-<h1 class="mb-4">Добавить клиента</h1>
 
-<div class="row">
-    <div class="col-md-6">
-        <form method="post">
-            <div class="card shadow-sm">
-                <div class="card-body">
-                    <div class="mb-3">
-                        <label asp-for="Client.FullName" class="form-label"></label>
-                        <input asp-for="Client.FullName" class="form-control" />
-                        <span asp-validation-for="Client.FullName" class="text-danger"></span>
-                    </div>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-5">
 
-                    <div class="mb-3">
-                        <label asp-for="Client.Email" class="form-label"></label>
-                        <input asp-for="Client.Email" class="form-control" />
-                        <span asp-validation-for="Client.Email" class="text-danger"></span>
-                    </div>
+            <div class="mb-4 text-center">
+                <div class="display-6 text-success mb-2">➕</div>
+                <h2 class="fw-bold">Регистрация клиента</h2>
+                <p class="text-muted">Заполните данные для создания новой карточки</p>
+            </div>
 
-                    <div class="mb-3">
-                        <label asp-for="Client.NumberPhone" class="form-label"></label>
-                        <input asp-for="Client.NumberPhone" class="form-control" />
-                        <span asp-validation-for="Client.NumberPhone" class="text-danger"></span>
-                    </div>                    
+            <div class="card border-0 shadow-sm overflow-hidden">
+                <div class="bg-success p-2 opacity-75"></div>
 
-                    <div class="d-flex gap-2">
-                        <button type="submit" class="btn btn-primary">
-                            Сохранить
-                        </button>
+                <div class="card-body p-4 p-md-5">
+                    <form method="post">
 
-                        <a asp-page="Index" class="btn btn-secondary">
-                            Назад
-                        </a>
-                    </div>
+                        <div class="mb-4">
+                            <label asp-for="Client.FullName" class="form-label fw-semibold text-secondary small text-uppercase ls-1">Полное имя</label>
+                            <div class="input-group shadow-sm-hover transition-all">
+                                <span class="input-group-text bg-light border-end-0">👤</span>
+                                <input asp-for="Client.FullName" class="form-control border-start-0 ps-0" placeholder="Фамилия Имя Отчество" />
+                            </div>
+                            <span asp-validation-for="Client.FullName" class="text-danger small mt-1 d-block"></span>
+                        </div>
+
+                        <div class="mb-4">
+                            <label asp-for="Client.Email" class="form-label fw-semibold text-secondary small text-uppercase ls-1">Электронная почта</label>
+                            <div class="input-group shadow-sm-hover transition-all">
+                                <span class="input-group-text bg-light border-end-0">📧</span>
+                                <input asp-for="Client.Email" class="form-control border-start-0 ps-0" placeholder="email@example.com" />
+                            </div>
+                            <span asp-validation-for="Client.Email" class="text-danger small mt-1 d-block"></span>
+                        </div>
+
+                        <div class="mb-4">
+                            <label asp-for="Client.NumberPhone" class="form-label fw-semibold text-secondary small text-uppercase ls-1">Телефон</label>
+                            <div class="input-group shadow-sm-hover transition-all">
+                                <span class="input-group-text bg-light border-end-0">📞</span>
+                                <input asp-for="Client.NumberPhone" class="form-control border-start-0 ps-0" placeholder="+7 (___) ___-__-__" />
+                            </div>
+                            <span asp-validation-for="Client.NumberPhone" class="text-danger small mt-1 d-block"></span>
+                        </div>
+
+                        <div class="d-grid gap-2 mt-5">
+                            <button type="submit" class="btn btn-success btn-lg shadow-sm fw-bold py-3">
+                                Создать карточку
+                            </button>
+                            <a asp-page="Index" class="btn btn-link text-muted text-decoration-none small mt-2">
+                                ← Вернуться к списку
+                            </a>
+                        </div>
+                    </form>
                 </div>
             </div>
-        </form>
+
+            <div class="text-center mt-4">
+                <small class="text-muted italic">После создания вы сможете привязать автомобиль в профиле клиента.</small>
+            </div>
+
+        </div>
     </div>
 </div>
+
+<style>
+    .ls-1 {
+        letter-spacing: 0.5px;
+    }
+
+    .card {
+        border-radius: 1.25rem;
+    }
+
+    .btn-lg {
+        border-radius: 10px;
+    }
+
+    .input-group-text {
+        border-color: #e9ecef;
+        color: #6c757d;
+    }
+
+    .form-control {
+        border-color: #e9ecef;
+    }
+
+        .form-control:focus {
+            border-color: #198754;
+            box-shadow: 0 0 0 0.25rem rgba(25, 135, 84, 0.1);
+        }
+
+    .transition-all {
+        transition: all 0.2s ease;
+    }
+</style>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
-
-

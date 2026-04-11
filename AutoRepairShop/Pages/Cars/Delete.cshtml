@@ -1,19 +1,85 @@
 ﻿@page "{id:int}"
 @model AutoRepairShop.Pages.Cars.DeleteModel
 @{
+    ViewData["Title"] = "Удаление автомобиля";
 }
-<h1>Удалить автомобиль</h1>
 
-<h3>Вы уверены?</h3>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-5">
 
-<div>
-    <p><strong>@Model.Car.Brand</strong></p>
-    <p>@Model.Car.ModelCar</p>
+            <div class="text-center mb-4">
+                <div class="display-1 text-danger opacity-25 mb-2">🗑️</div>
+                <h2 class="fw-bold text-dark">Удаление записи</h2>
+                <p class="text-muted">Вы собираетесь безвозвратно удалить автомобиль из системы</p>
+            </div>
+
+            <div class="card border-0 shadow-sm overflow-hidden">
+                <div class="bg-danger p-2"></div>
+
+                <div class="card-body p-4 p-md-5">
+
+                    <div class="text-center mb-4">
+                        <p class="text-uppercase fw-bold text-muted small ls-1 mb-1">Транспортное средство</p>
+                        <h3 class="fw-bold mb-0">@Model.Car.Brand?.Name @Model.Car.ModelCar</h3>
+                        <span class="badge bg-light text-dark border mt-2">@Model.Car.Year год выпуска</span>
+                    </div>
+
+                    <div class="p-3 bg-light rounded-3 mb-4 border-start border-4 border-primary">
+                        <label class="text-uppercase fw-bold text-muted d-block mb-1" style="font-size: 0.65rem;">Зарегистрированный владелец</label>
+                        <div class="d-flex align-items-center">
+                            <span class="me-2">👤</span>
+                            <span class="fw-bold text-dark">@Model.Car.Client?.FullName</span>
+                        </div>
+                    </div>
+
+                    <div class="alert alert-warning border-0 small mb-4 shadow-sm">
+                        <strong>Внимание:</strong> Удаление автомобиля приведет к потере всей связанной с ним истории ремонтов и сервисных записей.
+                    </div>
+
+                    <form method="post">
+                        <input type="hidden" asp-for="Car.Id" />
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-danger btn-lg shadow-sm fw-bold py-3">
+                                Подтвердить удаление
+                            </button>
+                            <a asp-page="./Index" class="btn btn-link text-secondary text-decoration-none small mt-2">
+                                ← Отмена, вернуться назад
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <p class="text-center text-muted mt-4 small">
+                Системный идентификатор: <code>#@Model.Car.Id</code>
+            </p>
+
+        </div>
+    </div>
 </div>
 
-<form method="post">
-    <input type="hidden" asp-for="Car.Id" />
-    <button type="submit">Удалить</button>
-</form>
+<style>
+    .ls-1 {
+        letter-spacing: 0.05rem;
+    }
 
-<a asp-page="Index">Отмена</a>
+    .card {
+        border-radius: 1.25rem;
+    }
+
+    .btn-lg {
+        border-radius: 12px;
+        transition: all 0.2s ease;
+    }
+
+        .btn-lg:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(220, 53, 69, 0.3) !important;
+        }
+
+    .alert {
+        border-radius: 10px;
+    }
+</style>

@@ -1,40 +1,91 @@
 ﻿@page "{id:int}"
 @model AutoRepairShop.Pages.Clients.DeleteModel
+@{
+    ViewData["Title"] = "Удаление клиента";
+}
 
-<div class="row justify-content-center">
-    <div class="col-md-6 col-lg-5">
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-5">
 
-        <div class="card border-danger shadow-sm mt-4">
-            <div class="card-header bg-danger text-white">
-                <h5 class="mb-0">Подтверждение удаления</h5>
+            <div class="text-center mb-4">
+                <div class="display-1 text-danger opacity-25">🗑️</div>
+                <h2 class="fw-bold">Удаление профиля</h2>
+                <p class="text-muted">Это действие нельзя будет отменить</p>
             </div>
 
-            <div class="card-body">
-                <p class="mb-3">
-                    Вы действительно хотите удалить клиента:
-                </p>
+            <div class="card border-0 shadow-sm overflow-hidden">
+                <div class="bg-danger p-2"></div>
 
-                <div class="alert alert-light border">
-                    <strong>@Model.Client.FullName</strong><br />
-                    <small class="text-muted">@Model.Client.Email</small>
-                </div>
-
-                <form method="post">
-                    <input type="hidden" asp-for="Client.Id" />
-
-                    <div class="d-flex justify-content-between">
-                        <a asp-page="Index" class="btn btn-outline-secondary">
-                            Отмена
-                        </a>
-
-                        <button type="submit" class="btn btn-danger">
-                            Удалить
-                        </button>
+                <div class="card-body p-4 p-md-5">
+                    <div class="text-center mb-4">
+                        <p class="mb-2">Вы собираетесь безвозвратно удалить клиента:</p>
+                        <h4 class="fw-bold text-dark">@Model.Client.FullName</h4>
+                        <span class="badge bg-light text-secondary border">Email: @Model.Client.Email</span>
                     </div>
-                </form>
+
+                    <div class="alert alert-warning border-0 small shadow-sm mb-4">
+                        <div class="d-flex">
+                            <div class="me-3 fs-4">⚠️</div>
+                            <div>
+                                <strong>Внимание:</strong> Все связанные данные, включая историю обращений и привязанные автомобили, могут стать недоступными.
+                            </div>
+                        </div>
+                    </div>
+
+                    <form method="post">
+                        <input type="hidden" asp-for="Client.Id" />
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-danger btn-lg shadow-sm fw-bold">
+                                Да, удалить клиента
+                            </button>
+                            <a asp-page="Index" class="btn btn-link text-secondary text-decoration-none small mt-2">
+                                ← Нет, я передумал (Вернуться)
+                            </a>
+                        </div>
+                    </form>
+                </div>
             </div>
+
+            <p class="text-center text-muted mt-4 small">
+                Системный идентификатор записи: <code>#@Model.Client.Id</code>
+            </p>
 
         </div>
-
     </div>
 </div>
+
+<style>
+    .card {
+        animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+        border-radius: 1rem;
+    }
+
+    @@keyframes shake {
+        10%, 90% {
+            transform: translate3d(-1px, 0, 0);
+        }
+
+        20%, 80% {
+            transform: translate3d(2px, 0, 0);
+        }
+
+        30%, 50%, 70% {
+            transform: translate3d(-4px, 0, 0);
+        }
+
+        40%, 60% {
+            transform: translate3d(4px, 0, 0);
+        }
+    }
+
+    .btn-danger {
+        transition: all 0.2s ease;
+    }
+
+        .btn-danger:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 15px rgba(220, 53, 69, 0.4) !important;
+        }
+</style>

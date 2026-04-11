@@ -1,8 +1,79 @@
 ﻿@page
 @model PrivacyModel
 @{
-    ViewData["Title"] = "Privacy Policy";
+    ViewData["Title"] = "Политика конфиденциальности";
 }
-<h1>@ViewData["Title"]</h1>
 
-<p>Use this page to detail your site's privacy policy.</p>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+
+            <div class="text-center mb-5">
+                <h1 class="display-5 fw-bold text-dark">@ViewData["Title"]</h1>
+                <p class="text-muted">Последнее обновление: @DateTime.Now.ToString("dd.MM.yyyy")</p>
+                <hr class="w-25 mx-auto border-primary border-2">
+            </div>
+
+            <div class="card border-0 shadow-sm p-4 p-md-5">
+
+                <section class="mb-5">
+                    <h3 class="h4 text-primary mb-3">1. Общие положения</h3>
+                    <p class="text-secondary leading-relaxed">
+                        Данная политика описывает, как проект <strong>«Авто-Профи»</strong> собирает и обрабатывает ваши данные. Мы ценим доверие наших пользователей и стремимся к максимальной прозрачности в вопросах безопасности.
+                    </p>
+                </section>
+
+                <section class="mb-5">
+                    <h3 class="h4 text-primary mb-3">2. Какие данные мы собираем</h3>
+                    <p class="text-secondary mb-3">Для корректной работы системы учета мы храним следующие категории данных:</p>
+                    <ul class="list-group list-group-flush mb-3">
+                        <li class="list-group-item bg-transparent px-0">
+                            <span class="badge bg-primary me-2">Клиенты</span> ФИО, номер телефона, адрес электронной почты.
+                        </li>
+                        <li class="list-group-item bg-transparent px-0">
+                            <span class="badge bg-success me-2">Автомобили</span> Марка, модель, год выпуска и владелец.
+                        </li>
+                    </ul>
+                </section>
+
+                <section class="mb-5 text-center p-4 bg-light rounded-3 border">
+                    <h3 class="h5 mb-3 text-dark">Безопасность данных — наш приоритет</h3>
+                    <p class="small text-muted mb-0">
+                        Все данные хранятся в защищенной базе данных и доступны только авторизованным сотрудникам мастерской. Мы не передаем информацию третьим лицам без вашего согласия.
+                    </p>
+                </section>
+
+                <section class="mb-0">
+                    <h3 class="h4 text-primary mb-3">3. Контактная информация</h3>
+                    <p class="text-secondary">
+                        Если у вас есть вопросы по поводу удаления или изменения ваших данных, пожалуйста, свяжитесь с администратором системы:
+                    </p>
+                    <div class="d-flex align-items-center mt-3 p-3 border rounded">
+                        <div class="fs-2 me-3">📧</div>
+                        <div>
+                            <div class="fw-bold">Отдел поддержки</div>
+                            <a href="mailto:support@auto-profi.ru" class="text-decoration-none">support@auto-profi.ru</a>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+
+            <div class="text-center mt-4">
+                <a asp-page="/Index" class="btn btn-link text-decoration-none">← Вернуться на главную</a>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Улучшаем читаемость текста */
+    .leading-relaxed {
+        line-height: 1.7;
+    }
+
+    .card {
+        border-radius: 1rem;
+    }
+</style>

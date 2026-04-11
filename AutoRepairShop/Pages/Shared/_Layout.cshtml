@@ -1,54 +1,154 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - AutoRepairShop</title>
+    <title>@ViewData["Title"] - Авто-Профи</title>
+
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/AutoRepairShop.styles.css" asp-append-version="true" />
+
+    <style>
+        :root {
+            --bg-body: #f4f7f6;
+            --bg-navbar: #ffffff;
+            --bg-card: #ffffff;
+            --text-main: #212529;
+            --text-muted-custom: #6c757d;
+            --border-color: rgba(0,0,0,0.1);
+            --card-inner-bg: #f8f9fa; 
+        }
+        [data-theme="dark"] {
+            --bg-body: #121212;
+            --bg-navbar: #1e1e1e;
+            --bg-card: #252525;
+            --text-main: #f8f9fa;
+            --text-muted-custom: #adb5bd;
+            --border-color: rgba(255,255,255,0.1);
+            --card-inner-bg: #2d2d2d; 
+        }
+        body {
+            background-color: var(--bg-body) !important;
+            color: var(--text-main) !important;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+            color: var(--text-main) !important;
+        }
+        .card {
+            background-color: var(--bg-card) !important;
+            border-color: var(--border-color) !important;
+            color: var(--text-main) !important;
+        }
+        .bg-white, .bg-light {
+            background-color: var(--card-inner-bg) !important;
+            color: var(--text-main) !important;
+        }
+        .text-muted, .text-secondary, .lead {
+            color: var(--text-muted-custom) !important;
+        }
+        .text-dark {
+            color: var(--text-main) !important;
+        }
+        .navbar {
+            background-color: var(--bg-navbar) !important;
+            border-bottom: 1px solid var(--border-color) !important;
+        }
+
+        .footer {
+            background-color: var(--bg-navbar) !important;
+            border-top: 1px solid var(--border-color) !important;
+        }
+    </style>
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm mb-4">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-page="/Index">AutoRepairShop</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+                <a class="navbar-brand text-primary" asp-area="" asp-page="/Index">
+                    🛠️ Авто-Профи
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
-                        </li>
-                        
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Cars/Index">Cars</a>
+                            <a class="nav-link" asp-page="/Index">Главная</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-page="/Clients/Index">Clients</a>
+                            <a class="nav-link" asp-page="/Cars/Index">Автомобили</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-page="/Clients/Index">Клиенты</a>
                         </li>
                     </ul>
+
+                    <div class="theme-switch-wrapper ms-auto">
+                        <div class="form-check form-switch mb-0">
+                            <input class="form-check-input" type="checkbox" id="themeToggle" style="cursor:pointer;">
+                            <label class="form-check-label ms-1" for="themeToggle" id="themeIcon">☀️</label>
+                        </div>
+                    </div>
                 </div>
             </div>
         </nav>
     </header>
+
     <div class="container">
-        <main role="main" class="pb-3">
+        <main role="main" class="pb-5">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2026 - AutoRepairShop - <a asp-area="" asp-page="/Privacy">Privacy</a>
+    <footer class="footer border-top shadow-sm">
+        <div class="container text-center">
+            <div class="row">
+                <div class="col-md-6 text-md-start">
+                    &copy; @DateTime.Now.Year — <strong>Авто-Профи</strong>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <a asp-page="/Privacy" class="text-muted text-decoration-none mx-2 small">Конфиденциальность</a>
+                </div>
+            </div>
         </div>
     </footer>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <script>
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = document.getElementById('themeIcon');
+        const htmlElement = document.documentElement;
+
+        const getPreferredTheme = () => {
+            const saved = localStorage.getItem('theme');
+            if (saved) return saved;
+            return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        };
+
+        const setTheme = (theme) => {
+            htmlElement.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+            themeToggle.checked = (theme === 'dark');
+            themeIcon.textContent = (theme === 'dark' ? '🌙' : '☀️');
+        };
+
+        setTheme(getPreferredTheme());
+
+        themeToggle.addEventListener('change', () => {
+            setTheme(themeToggle.checked ? 'dark' : 'light');
+        });
+
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+            if (!localStorage.getItem('theme')) {
+                setTheme(e.matches ? 'dark' : 'light');
+            }
+        });
+    </script>
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>

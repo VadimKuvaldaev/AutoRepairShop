@@ -1,14 +1,88 @@
 ﻿@page
 @model IndexModel
 @{
-	 ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Главная — Автомастерская";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Добро пожаловать в проект автомастерская </h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container mt-5">
+    <div class="row align-items-center mb-5">
+        <div class="col-lg-7">
+            <h1 class="display-4 fw-bold text-primary mb-3">Система «Авто-Профи»</h1>
+            <p class="lead mb-4 custom-description">
+                Добро пожаловать в единую среду управления вашим автосервисом.
+                Наше решение помогает мастерам и администраторам забыть о бумажной волоките
+                и сосредоточиться на главном — качественном ремонте.
+            </p>
+            
+            <div class="d-flex gap-3 mb-4">
+                <div class="p-3 bg-light rounded shadow-sm flex-fill">
+                    <h5 class="mb-1 text-primary">Учет клиентов</h5>
+                    <p class="small text-muted mb-0">Полная история обращений и контактов в один клик.</p>
+                </div>
+                <div class="p-3 bg-light rounded shadow-sm flex-fill">
+                    <h5 class="mb-1 text-success">Автопарк</h5>
+                    <p class="small text-muted mb-0">База данных автомобилей с привязкой к владельцам.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-5 d-none d-lg-block text-center">
+             <div class="display-1 text-secondary opacity-25" style="font-size: 10rem;">🛠️</div>
+        </div>
+    </div>
+
+    <div class="row g-4 justify-content-center">
+        <div class="col-md-6 col-lg-5">
+            <div class="card h-100 border-0 shadow-sm hover-up transition-all">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="bg-primary text-white p-3 rounded-circle me-3">🚗</div>
+                        <h3 class="card-title mb-0">Автомобили</h3>
+                    </div>
+                    <p class="card-text text-muted">
+                        Управляйте базой транспортных средств. Здесь можно добавлять новые машины, 
+                        редактировать их характеристики (марка, модель, год) и проверять владельцев.
+                    </p>
+                    <a asp-page="/Cars/Index" class="btn btn-primary w-100 mt-2">
+                        Открыть гараж
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-5">
+            <div class="card h-100 border-0 shadow-sm hover-up transition-all">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="bg-success text-white p-3 rounded-circle me-3">👥</div>
+                        <h3 class="card-title mb-0">Клиенты</h3>
+                    </div>
+                    <p class="card-text text-muted">
+                        Ваша главная ценность. Создавайте профили клиентов, сохраняйте их номера телефонов 
+                        и почту для быстрой связи и персонального подхода.
+                    </p>
+                    <a asp-page="/Clients/Index" class="btn btn-success w-100 mt-2">
+                        Работа с базой
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
+<style>
+    .hover-up:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 1rem 3rem rgba(0,0,0,.1) !important;
+    }
 
-
-<input type="search" name="query" placeholder="Введите запрос">
+    .custom-description {
+        color: var(--text-main) !important;
+        opacity: 0.85;
+    }
+    .transition-all {
+        transition: all 0.3s ease;
+    }
+    .ls-wide {
+        letter-spacing: 0.1rem;
+    }
+</style>

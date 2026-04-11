@@ -1,15 +1,17 @@
 ﻿@page
 @model AutoRepairShop.Pages.Cars.IndexModel
 @{
-    ViewData["Title"] = "Список авто";
+    ViewData["Title"] = "Автопарк";
 }
 
 <div class="container mt-4">
-
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <h2>Список автомобилей</h2>
-        <a asp-page="Create" class="btn btn-success">
-            Добавить новый автомобиль
+    <div class="d-flex justify-content-between align-items-end mb-4">
+        <div>
+            <h2 class="fw-bold text-dark mb-0">Учет автомобилей</h2>
+            <p class="text-muted small mb-0">Всего в базе: @Model.Cars.Count машин</p>
+        </div>
+        <a asp-page="Create" class="btn btn-primary shadow-sm px-4">
+            + Добавить авто
         </a>
     </div>
 
@@ -17,45 +19,70 @@
         @foreach (var car in Model.Cars)
         {
             <div class="col-sm-6 col-md-4 col-lg-3">
+                <div class="card h-100 border-0 shadow-sm car-card transition-all">
 
-                <div class="card h-100 shadow-sm">
-
-                    <div class="card-body">
-
-                        <h5 class="card-title text-truncate">
-                            🚘 @car.Brand.Name
-                        </h5>
-
-                        <p class="card-text text-muted mb-1">
-                            Модель: @car.ModelCar
-                        </p>
-
-                        <p class="card-text mb-1">
-                            Год: <span class="badge bg-secondary">@car.Year</span>
-                        </p>
-
-                        <p class="card-text mb-2">
-                            Владелец: <span class="badge bg-info">@car.Client.Name</span>
-                        </p>
-
-                        <div class="d-flex justify-content-between">
-                            <a asp-page="Details" asp-route-id="@car.Id" class="btn btn-sm btn-info">
-                                Открыть
-                            </a>
-                            <a asp-page="Edit" asp-route-id="@car.Id" class="btn btn-sm btn-warning">
-                                Изменить
-                            </a>
-                            <a asp-page="Delete" asp-route-id="@car.Id" class="btn btn-sm btn-danger">
-                                Удалить
-                            </a>
+                    <div class="card-body p-4">
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <div class="rounded-3 bg-primary bg-opacity-10 p-2 text-primary mb-3">
+                                🚗
+                            </div>
+                            <span class="badge rounded-pill bg-light text-dark border fw-medium">
+                                @car.Year год
+                            </span>
                         </div>
 
+                        <h4 class="fw-bold text-dark mb-1">@car.Brand.Name</h4>
+                        <p class="text-muted mb-4">@car.ModelCar</p>
+
+                        <div class="p-3 rounded-3 bg-light mb-4">
+                            <label class="text-uppercase fw-bold text-muted d-block mb-1" style="font-size: 0.65rem; letter-spacing: 0.5px;">Владелец</label>
+                            <div class="d-flex align-items-center">
+                                <span class="small fw-semibold text-dark text-truncate">
+                                    👤 @car.Client.FullName
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <a asp-page="Details" asp-route-id="@car.Id" class="btn btn-primary py-2 fw-semibold">
+                                Детали и история
+                            </a>
+                            <div class="d-flex gap-2">
+                                <a asp-page="Edit" asp-route-id="@car.Id" class="btn btn-outline-warning flex-grow-1 py-2">
+                                    Изменить
+                                </a>
+                                <a asp-page="Delete" asp-route-id="@car.Id" class="btn btn-outline-danger flex-grow-1 py-2">
+                                    Удалить
+                                </a>
+                            </div>
+                        </div>
                     </div>
 
                 </div>
-
             </div>
         }
     </div>
-
 </div>
+
+<style>
+    .car-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 0.5rem 1.5rem rgba(0,0,0,0.08) !important;
+    }
+
+    .transition-all {
+        transition: all 0.25s ease-in-out;
+    }
+
+    .card {
+        border-radius: 1.25rem;
+    }
+
+    .btn {
+        border-radius: 10px;
+    }
+
+    .bg-primary.bg-opacity-10 {
+        background-color: rgba(13, 110, 253, 0.1) !important;
+    }
+</style>
