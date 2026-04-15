@@ -5,11 +5,10 @@
 }
 
 <style>
-    /* Базовые стили карточки и формы */
     .create-card {
         background-color: #ffffff !important;
         border: 1px solid rgba(0,0,0,0.08) !important;
-        border-top: 5px solid #198754 !important; /* Зеленая полоса сверху */
+        border-top: 5px solid #198754 !important; 
         border-radius: 15px;
         max-width: 550px;
     }
@@ -37,7 +36,6 @@
             box-shadow: 0 0 0 0.25rem rgba(25, 135, 84, 0.1);
         }
 
-    /* ТЕМНАЯ ТЕМА */
     [data-theme="dark"] .create-card {
         background-color: #1e1e1e !important;
         border-color: rgba(255,255,255,0.1) !important;
@@ -83,7 +81,6 @@
 
     <div class="card shadow-sm p-4 w-100 create-card">
         <form method="post">
-            @* Список ошибок валидации *@
             <div asp-validation-summary="All" class="text-danger mb-3 small"></div>
 
             <div class="mb-3">
