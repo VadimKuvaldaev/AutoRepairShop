@@ -1,120 +1,141 @@
 ﻿@page
 @model AutoRepairShop.Pages.Cars.CreateModel
 @{
-    ViewData["Title"] = "Новый автомобиль";
+    ViewData["Title"] = "Добавить автомобиль";
 }
 
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-8 col-lg-6">
-
-            <div class="mb-4 text-center">
-                <div class="display-6 text-success mb-2">🚗✨</div>
-                <h2 class="fw-bold">Постановка на учет</h2>
-                <p class="text-muted">Введите данные автомобиля для привязки к базе сервиса</p>
-            </div>
-
-            <div class="card border-0 shadow-sm overflow-hidden">
-                <div class="bg-success p-2 opacity-75"></div>
-
-                <div class="card-body p-4 p-md-5">
-                    <form method="post">
-
-                        <div class="row">
-                            <div class="col-md-7 mb-4">
-                                <label asp-for="Car.Brand" class="form-label fw-semibold text-secondary small text-uppercase ls-1">Марка</label>
-                                <div class="input-group transition-all">
-                                    <span class="input-group-text bg-light border-end-0 text-muted">🏭</span>
-                                    <input asp-for="Car.Brand.Name" class="form-control border-start-0 ps-0" placeholder="Например: BMW" />
-                                </div>
-                                <span asp-validation-for="Car.Brand" class="text-danger small d-block mt-1"></span>
-                            </div>
-
-                            <div class="col-md-5 mb-4">
-                                <label asp-for="Car.Year" class="form-label fw-semibold text-secondary small text-uppercase ls-1">Год выпуска</label>
-                                <div class="input-group transition-all">
-                                    <span class="input-group-text bg-light border-end-0 text-muted">📅</span>
-                                    <input asp-for="Car.Year" type="number" class="form-control border-start-0 ps-0" placeholder="2024" />
-                                </div>
-                                <span asp-validation-for="Car.Year" class="text-danger small d-block mt-1"></span>
-                            </div>
-                        </div>
-
-                        <div class="mb-4">
-                            <label asp-for="Car.ModelCar" class="form-label fw-semibold text-secondary small text-uppercase ls-1">Модель</label>
-                            <div class="input-group transition-all">
-                                <span class="input-group-text bg-light border-end-0 text-muted">🚘</span>
-                                <input asp-for="Car.ModelCar" class="form-control border-start-0 ps-0" placeholder="Например: X5 M" />
-                            </div>
-                            <span asp-validation-for="Car.ModelCar" class="text-danger small d-block mt-1"></span>
-                        </div>
-
-                        <div class="mb-4">
-                            <label asp-for="Car.Client" class="form-label fw-semibold text-secondary small text-uppercase ls-1">Владелец</label>
-                            <div class="input-group shadow-sm-hover transition-all">
-                                <span class="input-group-text bg-light border-end-0 text-muted">👤</span>
-                                <select asp-for="Car.Client.Name" asp-items="Model.ClientList" class="form-select border-start-0 ps-0">
-                                    <option value="">-- Выберите клиента из списка --</option>
-                                </select>
-                            </div>
-                            <span asp-validation-for="Car.Client" class="text-danger small d-block mt-1"></span>
-                        </div>
-
-                        <div class="d-grid gap-2 mt-5">
-                            <button type="submit" class="btn btn-success btn-lg shadow-sm fw-bold py-3">
-                                Создать запись
-                            </button>
-                            <a asp-page="Index" class="btn btn-link text-muted text-decoration-none small mt-2">
-                                ← Вернуться в автопарк
-                            </a>
-                        </div>
-                    </form>
-                </div>
-            </div>
-
-            <div class="alert alert-info border-0 shadow-sm mt-4 p-3 small">
-                <strong>Совет:</strong> Если владельца еще нет в базе, сначала создайте карточку клиента в разделе «Клиенты».
-            </div>
-
-        </div>
-    </div>
-</div>
-
 <style>
-    .ls-1 {
+    /* Базовые стили карточки и формы */
+    .create-card {
+        background-color: #ffffff !important;
+        border: 1px solid rgba(0,0,0,0.08) !important;
+        border-top: 5px solid #198754 !important; /* Зеленая полоса сверху */
+        border-radius: 15px;
+        max-width: 550px;
+    }
+
+    .form-label-custom {
+        color: #6c757d;
+        font-size: 0.75rem;
+        font-weight: bold;
+        text-transform: uppercase;
         letter-spacing: 0.5px;
     }
 
-    .card {
-        border-radius: 1.25rem;
-    }
-
-    .btn-lg {
-        border-radius: 12px;
-        transition: transform 0.2s;
-    }
-
-        .btn-lg:active {
-            transform: scale(0.98);
-        }
-
     .input-group-text {
+        background-color: #f8f9fa;
+        border-color: #dee2e6;
+        color: #198754;
+    }
+
+    .form-control, .form-select {
         border-color: #dee2e6;
     }
 
-    .form-control {
-        border-color: #dee2e6;
-    }
-
-        .form-control:focus {
+        .form-control:focus, .form-select:focus {
             border-color: #198754;
             box-shadow: 0 0 0 0.25rem rgba(25, 135, 84, 0.1);
         }
 
-    .transition-all {
-        transition: all 0.2s ease;
+    /* ТЕМНАЯ ТЕМА */
+    [data-theme="dark"] .create-card {
+        background-color: #1e1e1e !important;
+        border-color: rgba(255,255,255,0.1) !important;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.4) !important;
+    }
+
+    [data-theme="dark"] .input-group-text {
+        background-color: rgba(255,255,255,0.05);
+        border-color: rgba(255,255,255,0.1);
+        color: #2fb370;
+    }
+
+    [data-theme="dark"] .form-control, [data-theme="dark"] .form-select {
+        background-color: rgba(255,255,255,0.02);
+        border-color: rgba(255,255,255,0.1);
+        color: #f8f9fa;
+    }
+
+        [data-theme="dark"] .form-control::placeholder {
+            color: #6c757d;
+        }
+
+    [data-theme="dark"] .form-label-custom {
+        color: #adb5bd;
+    }
+
+    [data-theme="dark"] .text-main-bright {
+        color: #f8f9fa !important;
+    }
+
+    [data-theme="dark"] .form-select option {
+        background-color: #1e1e1e;
+        color: #f8f9fa;
     }
 </style>
+
+<div class="container d-flex flex-column align-items-center justify-content-center mt-5">
+    <div class="text-center mb-4">
+        <i class="bi bi-plus-circle text-success display-1"></i>
+        <h1 class="mt-3 fw-bold text-main-bright">Добавление автомобиля</h1>
+        <p class="text-custom-muted">Заполните данные для регистрации транспортного средства</p>
+    </div>
+
+    <div class="card shadow-sm p-4 w-100 create-card">
+        <form method="post">
+            @* Список ошибок валидации *@
+            <div asp-validation-summary="All" class="text-danger mb-3 small"></div>
+
+            <div class="mb-3">
+                <label class="form-label form-label-custom">Марка</label>
+                <div class="input-group">
+                    <span class="input-group-text border-end-0"><i class="bi bi-tag"></i></span>
+                    <input asp-for="Car.Brand" class="form-control border-start-0" placeholder="Например, Toyota" />
+                </div>
+                <span asp-validation-for="Car.Brand" class="text-danger small"></span>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label form-label-custom">Модель</label>
+                <div class="input-group">
+                    <span class="input-group-text border-end-0"><i class="bi bi-car-front"></i></span>
+                    <input asp-for="Car.ModelCar" class="form-control border-start-0" placeholder="Например, Camry" />
+                </div>
+                <span asp-validation-for="Car.ModelCar" class="text-danger small"></span>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label form-label-custom">Год выпуска</label>
+                <div class="input-group">
+                    <span class="input-group-text border-end-0"><i class="bi bi-calendar-event"></i></span>
+                    <input asp-for="Car.Year" class="form-control border-start-0" placeholder="2024" />
+                </div>
+                <span asp-validation-for="Car.Year" class="text-danger small"></span>
+            </div>
+
+            <div class="mb-4">
+                <label class="form-label form-label-custom">Владелец</label>
+                <div class="input-group">
+                    <span class="input-group-text border-end-0"><i class="bi bi-person"></i></span>
+                    <select asp-for="Car.ClientId" class="form-select border-start-0" asp-items="Model.ClientList">
+                        <option value="">-- Выберите владельца --</option>
+                    </select>
+                </div>
+                <span asp-validation-for="Car.ClientId" class="text-danger small"></span>
+            </div>
+
+            <button type="submit" class="btn btn-success w-100 py-2 fw-bold shadow-sm rounded-pill">
+                <i class="bi bi-check-lg me-1"></i> Создать и сохранить
+            </button>
+
+            <div class="text-center mt-3">
+                <a asp-page="./Index" class="text-custom-muted small text-decoration-none hover-link">
+                    <i class="bi bi-arrow-left me-1"></i> Отмена
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

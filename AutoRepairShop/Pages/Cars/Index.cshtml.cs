@@ -18,8 +18,7 @@ namespace AutoRepairShop.Pages.Cars
 
         public void OnGet()
         {
-            Cars = _context.Cars
-                .Include(c => c.Brand)
+            Cars = _context.Cars                
                 .Include(c => c.Client)
                 .ToList();
         }

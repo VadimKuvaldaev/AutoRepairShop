@@ -1,91 +1,124 @@
 ﻿@page
 @model AutoRepairShop.Pages.Clients.IndexModel
 @{
-    ViewData["Title"] = "Список клиентов";
+    ViewData["Title"] = "Клиенты";
 }
 
+<style>
+        .client-card, .info-section, .btn {
+                transition: all 0.3s ease;
+
+    }
+
+        .client-card {
+                background-color: #ffffff !important;
+                color: #212529 !important;
+                border: 1px solid rgba(0,0,0,0.08) !important;
+                border-radius: 20px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+
+    }
+
+        .info-section {
+                background-color: #f8f9fa;
+                border: 1px solid rgba(0,0,0,0.05);
+                border-radius: 12px;
+
+    }
+
+        [data-theme="dark"] .client-card {
+                background-color: #1e1e1e !important;
+                color: #f8f9fa !important;
+                border: 1px solid rgba(255,255,255,0.1) !important;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+
+    }
+
+        [data-theme="dark"] .info-section {
+                background-color: rgba(255,255,255,0.03);
+                border: 1px solid rgba(255,255,255,0.1);
+
+    }
+
+        .text-custom-muted {
+                color: #6c757d;
+
+    }
+
+        [data-theme="dark"] .text-custom-muted {
+                color: #adb5bd;
+
+    }
+
+        .user-icon-bg {
+                background-color: rgba(13, 110, 253, 0.1);
+                color: #0d6efd;
+
+    }
+</style>
+
 <div class="container mt-4">
-    <div class="d-flex justify-content-between align-items-end mb-4">
-        <div>
-            <h2 class="fw-bold text-dark mb-0">База клиентов</h2>
-            <p class="text-muted small mb-0">Всего зарегистрировано: @Model.Clients.Count</p>
-        </div>
-        <a asp-page="Create" class="btn btn-primary shadow-sm px-4">
-            <i class="bi bi-person-plus-fill"></i> + Новый клиент
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="fw-bold"><i class="bi bi-people me-2"></i>Клиенты</h1>
+        <a asp-page="Create" class="btn btn-primary fw-bold shadow-sm">
+            <i class="bi bi-person-plus me-1"></i> Новый клиент
         </a>
     </div>
 
-    <div class="row g-4">
-        @foreach (var client in Model.Clients)
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        @foreach (var item in Model.Clients)
         {
-            <div class="col-sm-6 col-md-4 col-lg-3">
-                <div class="card h-100 border-0 shadow-sm client-card transition-all">
-                    <div class="card-body d-flex flex-column p-4">
-                        
-                        <div class="mb-3">
-                            <h5 class="card-title fw-bold text-primary text-truncate mb-1" title="@client.FullName">
-                                @client.FullName
-                            </h5>
-                            <span class="badge bg-light text-secondary border">Клиент СТО</span>
+            <div class="col">
+                <div class="card h-100 client-card border-0">
+                    <div class="card-body p-4">
+
+                        <div class="d-flex align-items-center mb-3">
+                            <div>
+                                <h5 class="mb-0 fw-bold">@item.FullName</h5>
+                                <p class="text-custom-muted mb-0 small">Клиент сервиса</p>
+                            </div>
                         </div>
 
-                        <div class="mb-2">
-                            <label class="text-uppercase ls-1 fw-bold text-muted mb-1" style="font-size: 0.65rem;">Email</label>
-                            <span class="d-block text-truncate small" title="@client.Email">
-                                <span class="text-primary opacity-75">✉</span> @client.Email
-                            </span>
-                        </div>
-
-                        <div class="mb-4">
-                            <label class="text-uppercase ls-1 fw-bold text-muted mb-1" style="font-size: 0.65rem;">Телефон</label>
-                            <span class="d-block small">
-                                <span class="text-success opacity-75">📞</span> 
-                                @(string.IsNullOrEmpty(client.NumberPhone) ? "Не указан" : client.NumberPhone)
-                            </span>
-                        </div>
-
-                        <div class="mt-auto">
-                            <div class="d-grid gap-2">
-                                <a asp-page="Details" asp-route-id="@client.Id" class="btn btn-sm btn-primary py-2 fw-semibold">
-                                    Открыть профиль
-                                </a>
-                                <div class="d-flex gap-2">
-                                    <a asp-page="Edit" asp-route-id="@client.Id" class="btn btn-sm btn-outline-warning flex-grow-1 py-2">
-                                        Изменить
-                                    </a>
-                                    <a asp-page="Delete" asp-route-id="@client.Id" class="btn btn-sm btn-outline-danger flex-grow-1 py-2">
-                                        Удалить
-                                    </a>
+                        <div class="p-3 mb-4 info-section">
+                            <div class="mb-2">
+                                <p class="text-uppercase fw-bold text-custom-muted mb-1" style="font-size: 0.65rem; letter-spacing: 1px;">
+                                    Телефон
+                                </p>
+                                <div class="d-flex align-items-center">
+                                    <i class="bi bi-telephone text-primary me-2"></i>
+                                    <span class="fw-medium">@item.NumberPhone</span>
+                                </div>
+                            </div>
+                            <div class="mb-0">
+                                <p class="text-uppercase fw-bold text-custom-muted mb-1" style="font-size: 0.65rem; letter-spacing: 1px;">
+                                    Email
+                                </p>
+                                <div class="d-flex align-items-center">
+                                    <i class="bi bi-envelope text-primary me-2"></i>
+                                    <span class="fw-medium text-truncate" title="@item.Email">@item.Email</span>
                                 </div>
                             </div>
                         </div>
 
+                        <div class="d-grid gap-2">
+                            <a asp-page="./Details" asp-route-id="@item.Id"
+                                               class="btn btn-primary rounded-pill fw-bold py-2 shadow-sm">
+                                Профиль клиента
+                            </a>
+                            <div class="d-flex gap-2">
+                                <a asp-page="./Edit" asp-route-id="@item.Id"
+                                                     class="btn btn-outline-warning w-50 rounded-pill fw-bold">
+                                    Изменить
+                                </a>
+                                <a asp-page="./Delete" asp-route-id="@item.Id"
+                                                     class="btn btn-outline-danger w-50 rounded-pill fw-bold">
+                                    Удалить
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         }
     </div>
 </div>
-
-<style>
-    .client-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 0.5rem 1.5rem rgba(0,0,0,0.1) !important;
-    }
-    
-    .transition-all {
-        transition: all 0.25s ease-in-out;
-    }
-
-    .ls-1 {
-        letter-spacing: 0.05rem;
-    }
-
-    .card {
-        border-radius: 12px;
-    }
-    
-    .btn {
-        border-radius: 8px;
-    }
-</style>

@@ -16,39 +16,28 @@ namespace AutoRepairShop.Pages.Cars
         }
 
         [BindProperty]
-        public Car Car { get; set; }
+        public Car Car { get; set; } = default!;
 
-        public SelectList ClientList { get; set; }
+        public SelectList ClientList { get; set; } = default!;
 
-        public void OnGet()
+        public IActionResult OnGet()
         {
-            PopulateClientsList();
+            ClientList = new SelectList(_context.Clients, "Id", "FullName");
+            return Page();
         }
 
         public IActionResult OnPost()
         {
-            ModelState.Remove("Car.Client");
-            ModelState.Remove("Car.Brand");
-
             if (!ModelState.IsValid)
-            {         
-                PopulateClientsList();
+            {
+                ClientList = new SelectList(_context.Clients, "Id", "FullName");
                 return Page();
             }
 
             _context.Cars.Add(Car);
             _context.SaveChanges();
+
             return RedirectToPage("./Index");
-        }
-
-        private void PopulateClientsList()
-        {
-            var clients = _context.Clients
-                .OrderBy(c => c.FullName)
-                .Select(c => new { c.Id, c.FullName })
-                .ToList();
-
-            ClientList = new SelectList(clients, "Id", "FullName");
         }
     }
 }

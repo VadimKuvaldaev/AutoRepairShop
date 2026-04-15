@@ -2,6 +2,7 @@ using AutoRepairShop.Data;
 using AutoRepairShop.Model;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 
 namespace AutoRepairShop.Pages.Clients
 {
@@ -15,9 +16,20 @@ namespace AutoRepairShop.Pages.Clients
         public Client Client { get; set; } 
         public IActionResult OnGet(int id)
         {
-            Client = _context.Clients.FirstOrDefault(c => c.Id == id);
-            if(Client == null)
+            if (id == null)
+            {
                 return NotFound();
+            }
+
+            Client = _context.Clients
+                .Include(c => c.Cars)
+                .FirstOrDefault(m => m.Id == id);
+
+            if (Client == null)
+            {
+                return NotFound();
+            }
+
             return Page();
         }
     }

@@ -13,52 +13,65 @@
         :root {
             --bg-body: #f4f7f6;
             --bg-navbar: #ffffff;
-            --bg-card: #ffffff;
             --text-main: #212529;
-            --text-muted-custom: #6c757d;
-            --border-color: rgba(0,0,0,0.1);
-            --card-inner-bg: #f8f9fa; 
+            --border-color: rgba(0,0,0,0.05);
         }
+
         [data-theme="dark"] {
             --bg-body: #121212;
             --bg-navbar: #1e1e1e;
-            --bg-card: #252525;
             --text-main: #f8f9fa;
-            --text-muted-custom: #adb5bd;
             --border-color: rgba(255,255,255,0.1);
-            --card-inner-bg: #2d2d2d; 
         }
+
+        html, body {
+            height: 100%;
+        }
+
         body {
+            display: flex;
+            flex-direction: column;
             background-color: var(--bg-body) !important;
-            color: var(--text-main) !important;
-            transition: background-color 0.3s ease, color 0.3s ease;
+            color: var(--text-main);
+            transition: background-color 0.3s ease;
         }
-        h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
-            color: var(--text-main) !important;
+
+        main {
+            flex: 1 0 auto;
         }
-        .card {
-            background-color: var(--bg-card) !important;
-            border-color: var(--border-color) !important;
-            color: var(--text-main) !important;
-        }
-        .bg-white, .bg-light {
-            background-color: var(--card-inner-bg) !important;
-            color: var(--text-main) !important;
-        }
-        .text-muted, .text-secondary, .lead {
-            color: var(--text-muted-custom) !important;
-        }
-        .text-dark {
-            color: var(--text-main) !important;
-        }
+
         .navbar {
             background-color: var(--bg-navbar) !important;
-            border-bottom: 1px solid var(--border-color) !important;
+            box-shadow: 0 2px 10px var(--border-color);
+            border: none !important;
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .nav-link {
+            font-weight: 500;
+            color: var(--text-main) !important;
         }
 
         .footer {
-            background-color: var(--bg-navbar) !important;
+            flex-shrink: 0;
+            background: var(--bg-navbar);
+            color: var(--text-main);
+            padding: 20px 0;
             border-top: 1px solid var(--border-color) !important;
+        }
+
+        /* Текст, который сливался */
+        [data-theme="dark"] .text-muted,
+        [data-theme="dark"] .text-secondary {
+            color: #adb5bd !important;
+        }
+
+        [data-theme="dark"] .text-dark {
+            color: #f8f9fa !important;
         }
     </style>
 </head>
@@ -66,30 +79,19 @@
     <header>
         <nav class="navbar navbar-expand-sm mb-4">
             <div class="container">
-                <a class="navbar-brand text-primary" asp-area="" asp-page="/Index">
-                    🛠️ Авто-Профи
-                </a>
+                <a class="navbar-brand text-primary" asp-page="/Index">🛠️ Авто-Профи</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link" asp-page="/Index">Главная</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-page="/Cars/Index">Автомобили</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-page="/Clients/Index">Клиенты</a>
-                        </li>
+                        <li class="nav-item"><a class="nav-link" asp-page="/Index">Главная</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-page="/Cars/Index">Автомобили</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-page="/Clients/Index">Клиенты</a></li>
                     </ul>
-
-                    <div class="theme-switch-wrapper ms-auto">
-                        <div class="form-check form-switch mb-0">
-                            <input class="form-check-input" type="checkbox" id="themeToggle" style="cursor:pointer;">
-                            <label class="form-check-label ms-1" for="themeToggle" id="themeIcon">☀️</label>
-                        </div>
+                    <div class="form-check form-switch ms-auto">
+                        <input class="form-check-input" type="checkbox" id="themeToggle" style="cursor:pointer;">
+                        <label class="form-check-label ms-1" for="themeToggle" id="themeIcon">☀️</label>
                     </div>
                 </div>
             </div>
@@ -102,14 +104,14 @@
         </main>
     </div>
 
-    <footer class="footer border-top shadow-sm">
+    <footer class="footer shadow-sm">
         <div class="container text-center">
             <div class="row">
                 <div class="col-md-6 text-md-start">
                     &copy; @DateTime.Now.Year — <strong>Авто-Профи</strong>
                 </div>
                 <div class="col-md-6 text-md-end">
-                    <a asp-page="/Privacy" class="text-muted text-decoration-none mx-2 small">Конфиденциальность</a>
+                    <a asp-page="/Privacy" class="text-muted text-decoration-none mx-2">Конфиденциальность</a>
                 </div>
             </div>
         </div>
@@ -117,39 +119,23 @@
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-
     <script>
-        const themeToggle = document.getElementById('themeToggle');
-        const themeIcon = document.getElementById('themeIcon');
-        const htmlElement = document.documentElement;
-
-        const getPreferredTheme = () => {
-            const saved = localStorage.getItem('theme');
-            if (saved) return saved;
-            return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-        };
+        const toggle = document.getElementById('themeToggle');
+        const icon = document.getElementById('themeIcon');
+        const html = document.documentElement;
 
         const setTheme = (theme) => {
-            htmlElement.setAttribute('data-theme', theme);
+            html.setAttribute('data-theme', theme);
             localStorage.setItem('theme', theme);
-            themeToggle.checked = (theme === 'dark');
-            themeIcon.textContent = (theme === 'dark' ? '🌙' : '☀️');
+            toggle.checked = theme === 'dark';
+            icon.textContent = theme === 'dark' ? '🌙' : '☀️';
         };
 
-        setTheme(getPreferredTheme());
+        const current = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        setTheme(current);
 
-        themeToggle.addEventListener('change', () => {
-            setTheme(themeToggle.checked ? 'dark' : 'light');
-        });
-
-        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
-            if (!localStorage.getItem('theme')) {
-                setTheme(e.matches ? 'dark' : 'light');
-            }
-        });
+        toggle.addEventListener('change', () => setTheme(toggle.checked ? 'dark' : 'light'));
     </script>
-
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

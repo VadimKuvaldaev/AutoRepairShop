@@ -1,85 +1,80 @@
-﻿@page "{id:int}"
+﻿@page
 @model AutoRepairShop.Pages.Cars.DeleteModel
 @{
-    ViewData["Title"] = "Удаление автомобиля";
+    ViewData["Title"] = "Удаление";
 }
 
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-8 col-lg-5">
+<style>
+    /* Базовые стили карточки удаления */
+    .delete-card {
+        background-color: #ffffff !important;
+        border: 1px solid rgba(0,0,0,0.08) !important;
+        border-top: 5px solid #dc3545 !important; /* Красная полоса для предупреждения */
+        border-radius: 15px;
+        max-width: 500px;
+    }
 
-            <div class="text-center mb-4">
-                <div class="display-1 text-danger opacity-25 mb-2">🗑️</div>
-                <h2 class="fw-bold text-dark">Удаление записи</h2>
-                <p class="text-muted">Вы собираетесь безвозвратно удалить автомобиль из системы</p>
-            </div>
+    /* Адаптивные цвета текста */
+    .text-main-bright {
+        color: #212529;
+    }
 
-            <div class="card border-0 shadow-sm overflow-hidden">
-                <div class="bg-danger p-2"></div>
+    .text-custom-muted {
+        color: #6c757d;
+    }
 
-                <div class="card-body p-4 p-md-5">
+    /* ТЕМНАЯ ТЕМА */
+    [data-theme="dark"] .delete-card {
+        background-color: #1e1e1e !important;
+        border-color: rgba(255,255,255,0.1) !important;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.4) !important;
+    }
 
-                    <div class="text-center mb-4">
-                        <p class="text-uppercase fw-bold text-muted small ls-1 mb-1">Транспортное средство</p>
-                        <h3 class="fw-bold mb-0">@Model.Car.Brand?.Name @Model.Car.ModelCar</h3>
-                        <span class="badge bg-light text-dark border mt-2">@Model.Car.Year год выпуска</span>
-                    </div>
+    [data-theme="dark"] .text-main-bright {
+        color: #f8f9fa !important;
+    }
 
-                    <div class="p-3 bg-light rounded-3 mb-4 border-start border-4 border-primary">
-                        <label class="text-uppercase fw-bold text-muted d-block mb-1" style="font-size: 0.65rem;">Зарегистрированный владелец</label>
-                        <div class="d-flex align-items-center">
-                            <span class="me-2">👤</span>
-                            <span class="fw-bold text-dark">@Model.Car.Client?.FullName</span>
-                        </div>
-                    </div>
+    [data-theme="dark"] .text-custom-muted {
+        color: #adb5bd;
+    }
 
-                    <div class="alert alert-warning border-0 small mb-4 shadow-sm">
-                        <strong>Внимание:</strong> Удаление автомобиля приведет к потере всей связанной с ним истории ремонтов и сервисных записей.
-                    </div>
+    /* Стили для кнопки и ссылок */
+    .btn-delete-confirm {
+        transition: transform 0.2s ease;
+    }
 
-                    <form method="post">
-                        <input type="hidden" asp-for="Car.Id" />
+        .btn-delete-confirm:hover {
+            transform: scale(1.02);
+        }
+</style>
 
-                        <div class="d-grid gap-2">
-                            <button type="submit" class="btn btn-danger btn-lg shadow-sm fw-bold py-3">
-                                Подтвердить удаление
-                            </button>
-                            <a asp-page="./Index" class="btn btn-link text-secondary text-decoration-none small mt-2">
-                                ← Отмена, вернуться назад
-                            </a>
-                        </div>
-                    </form>
-                </div>
-            </div>
+<div class="container d-flex flex-column align-items-center justify-content-center mt-5">
+    <div class="text-center mb-4">
+        <i class="bi bi-exclamation-octagon text-danger display-1"></i>
+        <h1 class="mt-2 fw-bold text-main-bright">Удаление автомобиля</h1>
+    </div>
 
-            <p class="text-center text-muted mt-4 small">
-                Системный идентификатор: <code>#@Model.Car.Id</code>
-            </p>
+    <div class="card shadow-sm p-4 w-100 text-center delete-card">
+        <p class="text-custom-muted mb-1">Вы действительно хотите удалить:</p>
+        <h3 class="fw-bold text-main-bright">@Model.Car.Brand @Model.Car.ModelCar</h3>
 
+        <div class="d-flex align-items-center justify-content-center mb-4">
+            <i class="bi bi-person text-primary me-2"></i>
+            <span class="small text-custom-muted">Владелец: <strong>@Model.Car.Client.FullName</strong></span>
         </div>
+
+        <form method="post">
+            <input type="hidden" asp-for="Car.Id" />
+
+            <button type="submit" class="btn btn-danger w-100 py-3 fw-bold mb-3 shadow-sm rounded-pill btn-delete-confirm">
+                <i class="bi bi-trash3 me-2"></i>Подтвердить удаление
+            </button>
+
+            <div class="text-center">
+                <a asp-page="./Index" class="text-custom-muted small text-decoration-none">
+                    <i class="bi bi-arrow-left me-1"></i>Отмена
+                </a>
+            </div>
+        </form>
     </div>
 </div>
-
-<style>
-    .ls-1 {
-        letter-spacing: 0.05rem;
-    }
-
-    .card {
-        border-radius: 1.25rem;
-    }
-
-    .btn-lg {
-        border-radius: 12px;
-        transition: all 0.2s ease;
-    }
-
-        .btn-lg:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(220, 53, 69, 0.3) !important;
-        }
-
-    .alert {
-        border-radius: 10px;
-    }
-</style>

@@ -2,9 +2,10 @@
 {
     public class Car : EFModel
     {
-        public BrandCar Brand { get; set; }
-        public string ModelCar { get; set; } = "";       
+        public string Brand { get; set; } = string.Empty;
+        public string ModelCar { get; set; } = string.Empty;
         public int Year { get; set; }
-        public Client Client { get; set; }
+        public int ClientId { get; set; }
+        public Client? Client { get; set; } 
     }
 }

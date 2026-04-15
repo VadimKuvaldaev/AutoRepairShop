@@ -17,25 +17,34 @@ namespace AutoRepairShop.Pages.Clients
         [BindProperty]
         public Client Client { get; set; }
 
-        public IActionResult OnGet(int id)
+        public IActionResult OnGet(int? id)
         {
-            Client = _context.Clients.Find(id);
+            if (id == null) return NotFound();
 
-            if (Client == null)
-                return NotFound();
+            Client = _context.Clients.FirstOrDefault(m => m.Id == id);
+
+            if (Client == null) return NotFound();
 
             return Page();
         }
 
         public IActionResult OnPost()
         {
-            if (!ModelState.IsValid)
-                return Page();
+            if (!ModelState.IsValid) return Page();
 
-            _context.Clients.Update(Client);
-            _context.SaveChanges();
+            _context.Attach(Client).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
 
-            return RedirectToPage("Index");
+            try
+            {
+                _context.SaveChanges();
+            }
+            catch (Microsoft.EntityFrameworkCore.DbUpdateConcurrencyException)
+            {
+                if (!_context.Clients.Any(e => e.Id == Client.Id)) return NotFound();
+                else throw;
+            }
+
+            return RedirectToPage("./Details", new { id = Client.Id });
         }
     }
 }

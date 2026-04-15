@@ -1,91 +1,85 @@
-﻿@page "{id:int}"
+﻿@page
 @model AutoRepairShop.Pages.Clients.DeleteModel
 @{
     ViewData["Title"] = "Удаление клиента";
 }
 
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-8 col-lg-5">
-
-            <div class="text-center mb-4">
-                <div class="display-1 text-danger opacity-25">🗑️</div>
-                <h2 class="fw-bold">Удаление профиля</h2>
-                <p class="text-muted">Это действие нельзя будет отменить</p>
-            </div>
-
-            <div class="card border-0 shadow-sm overflow-hidden">
-                <div class="bg-danger p-2"></div>
-
-                <div class="card-body p-4 p-md-5">
-                    <div class="text-center mb-4">
-                        <p class="mb-2">Вы собираетесь безвозвратно удалить клиента:</p>
-                        <h4 class="fw-bold text-dark">@Model.Client.FullName</h4>
-                        <span class="badge bg-light text-secondary border">Email: @Model.Client.Email</span>
-                    </div>
-
-                    <div class="alert alert-warning border-0 small shadow-sm mb-4">
-                        <div class="d-flex">
-                            <div class="me-3 fs-4">⚠️</div>
-                            <div>
-                                <strong>Внимание:</strong> Все связанные данные, включая историю обращений и привязанные автомобили, могут стать недоступными.
-                            </div>
-                        </div>
-                    </div>
-
-                    <form method="post">
-                        <input type="hidden" asp-for="Client.Id" />
-
-                        <div class="d-grid gap-2">
-                            <button type="submit" class="btn btn-danger btn-lg shadow-sm fw-bold">
-                                Да, удалить клиента
-                            </button>
-                            <a asp-page="Index" class="btn btn-link text-secondary text-decoration-none small mt-2">
-                                ← Нет, я передумал (Вернуться)
-                            </a>
-                        </div>
-                    </form>
-                </div>
-            </div>
-
-            <p class="text-center text-muted mt-4 small">
-                Системный идентификатор записи: <code>#@Model.Client.Id</code>
-            </p>
-
-        </div>
-    </div>
-</div>
-
 <style>
-    .card {
-        animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
-        border-radius: 1rem;
+    /* Базовые стили (Светлая тема) */
+    .delete-card {
+        background-color: #ffffff !important;
+        border: 1px solid rgba(0,0,0,0.08) !important;
+        border-top: 5px solid #dc3545 !important; /* Красная полоса */
+        border-radius: 15px;
+        transition: all 0.3s ease;
     }
 
-    @@keyframes shake {
-        10%, 90% {
-            transform: translate3d(-1px, 0, 0);
-        }
-
-        20%, 80% {
-            transform: translate3d(2px, 0, 0);
-        }
-
-        30%, 50%, 70% {
-            transform: translate3d(-4px, 0, 0);
-        }
-
-        40%, 60% {
-            transform: translate3d(4px, 0, 0);
-        }
+    .warning-box {
+        background-color: #fff3cd; /* alert-warning */
+        border: 1px solid #ffeeba;
+        color: #856404;
+        border-radius: 12px;
     }
 
-    .btn-danger {
-        transition: all 0.2s ease;
+    /* ТЕМНАЯ ТЕМА */
+    [data-theme="dark"] .delete-card {
+        background-color: #1e1e1e !important;
+        border-color: rgba(255,255,255,0.1) !important;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.4) !important;
     }
 
-        .btn-danger:hover {
-            transform: scale(1.02);
-            box-shadow: 0 4px 15px rgba(220, 53, 69, 0.4) !important;
-        }
+    [data-theme="dark"] .warning-box {
+        background-color: rgba(255, 193, 7, 0.05) !important; /* Тёмный вариант варнинга */
+        border-color: rgba(255, 193, 7, 0.2) !important;
+        color: #ffc107 !important;
+    }
+
+    /* Вспомогательный текст */
+    .text-custom-muted {
+        color: #6c757d;
+    }
+
+    [data-theme="dark"] .text-custom-muted {
+        color: #adb5bd;
+    }
+
+    [data-theme="dark"] .text-main-bright {
+        color: #f8f9fa !important;
+    }
 </style>
+
+<div class="container d-flex flex-column align-items-center justify-content-center mt-5">
+    <div class="text-center mb-4">
+        <i class="bi bi-trash3 text-danger display-1 opacity-25"></i>
+        <h1 class="mt-2 fw-bold text-main-bright">Удаление профиля</h1>
+        <p class="text-custom-muted">Это действие нельзя будет отменить</p>
+    </div>
+
+    <div class="card shadow-sm p-4 w-100 text-center delete-card" style="max-width: 500px;">
+        <p class="text-custom-muted mb-1">Вы собираетесь безвозвратно удалить клиента:</p>
+        <h2 class="fw-bold mb-4 text-main-bright">@Model.Client.FullName</h2>
+
+        <div class="warning-box d-flex align-items-center text-start py-3 mb-4 px-3" style="font-size: 0.9rem;">
+            <i class="bi bi-exclamation-triangle-fill fs-4 me-3 text-danger"></i>
+            <div>
+                <strong>Внимание:</strong> Все связанные данные, включая историю обращений и привязанные автомобили, станут недоступны.
+            </div>
+        </div>
+
+        <form method="post">
+            <input type="hidden" asp-for="Client.Id" />
+            <button type="submit" class="btn btn-danger w-100 py-3 fw-bold mb-3 shadow-sm">
+                <i class="bi bi-trash me-2"></i>Да, удалить клиента
+            </button>
+            <div class="text-center">
+                <a asp-page="./Index" class="text-custom-muted small text-decoration-none">
+                    <i class="bi bi-arrow-left me-1"></i>Нет, я передумал (Вернуться)
+                </a>
+            </div>
+        </form>
+    </div>
+
+    <p class="text-custom-muted mt-4 small">
+        Системный идентификатор записи: <span class="text-danger fw-bold">#@Model.Client.Id</span>
+    </p>
+</div>

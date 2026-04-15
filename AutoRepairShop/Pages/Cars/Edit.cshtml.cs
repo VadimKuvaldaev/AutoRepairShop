@@ -24,7 +24,6 @@ namespace AutoRepairShop.Pages.Cars
         public IActionResult OnGet(int id)
         {
             Car = _context.Cars
-                .Include(c => c.Brand)
                 .Include(c => c.Client)
                 .FirstOrDefault(m => m.Id == id);
 
