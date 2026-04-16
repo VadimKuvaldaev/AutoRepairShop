@@ -3,6 +3,7 @@ using AutoRepairShop.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AutoRepairShop.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260409053811_UpdateDB2")]
+    partial class UpdateDB2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -20,6 +23,23 @@ namespace AutoRepairShop.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("AutoRepairShop.Model.BrandCar", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("BrandCars");
+                });
 
             modelBuilder.Entity("AutoRepairShop.Model.Car", b =>
                 {
@@ -29,9 +49,8 @@ namespace AutoRepairShop.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Brand")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("BrandId")
+                        .HasColumnType("int");
 
                     b.Property<int>("ClientId")
                         .HasColumnType("int");
@@ -48,6 +67,8 @@ namespace AutoRepairShop.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("BrandId");
 
                     b.HasIndex("ClientId");
 
@@ -76,6 +97,7 @@ namespace AutoRepairShop.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NumberPhone")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -104,11 +126,19 @@ namespace AutoRepairShop.Migrations
 
             modelBuilder.Entity("AutoRepairShop.Model.Car", b =>
                 {
+                    b.HasOne("AutoRepairShop.Model.BrandCar", "Brand")
+                        .WithMany("Cars")
+                        .HasForeignKey("BrandId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("AutoRepairShop.Model.Client", "Client")
                         .WithMany("Cars")
                         .HasForeignKey("ClientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Brand");
 
                     b.Navigation("Client");
                 });
@@ -118,6 +148,11 @@ namespace AutoRepairShop.Migrations
                     b.HasOne("AutoRepairShop.Model.ClientCar", null)
                         .WithMany("Clients")
                         .HasForeignKey("ClientCarId");
+                });
+
+            modelBuilder.Entity("AutoRepairShop.Model.BrandCar", b =>
+                {
+                    b.Navigation("Cars");
                 });
 
             modelBuilder.Entity("AutoRepairShop.Model.Client", b =>

@@ -1,19 +1,76 @@
-﻿@page "{id:int}"
+﻿@page
 @model AutoRepairShop.Pages.Cars.DeleteModel
 @{
+    ViewData["Title"] = "Удаление";
 }
-<h1>Удалить автомобиль</h1>
 
-<h3>Вы уверены?</h3>
+<style>
+    .delete-card {
+        background-color: #ffffff !important;
+        border: 1px solid rgba(0,0,0,0.08) !important;
+        border-top: 5px solid #dc3545 !important;
+        border-radius: 15px;
+        max-width: 500px;
+    }
 
-<div>
-    <p><strong>@Model.Car.Brand</strong></p>
-    <p>@Model.Car.ModelCar</p>
+    .text-main-bright {
+        color: #212529;
+    }
+
+    .text-custom-muted {
+        color: #6c757d;
+    }
+
+    [data-theme="dark"] .delete-card {
+        background-color: #1e1e1e !important;
+        border-color: rgba(255,255,255,0.1) !important;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.4) !important;
+    }
+
+    [data-theme="dark"] .text-main-bright {
+        color: #f8f9fa !important;
+    }
+
+    [data-theme="dark"] .text-custom-muted {
+        color: #adb5bd;
+    }
+
+    .btn-delete-confirm {
+        transition: transform 0.2s ease;
+    }
+
+        .btn-delete-confirm:hover {
+            transform: scale(1.02);
+        }
+</style>
+
+<div class="container d-flex flex-column align-items-center justify-content-center mt-5">
+    <div class="text-center mb-4">
+        <i class="bi bi-exclamation-octagon text-danger display-1"></i>
+        <h1 class="mt-2 fw-bold text-main-bright">Удаление автомобиля</h1>
+    </div>
+
+    <div class="card shadow-sm p-4 w-100 text-center delete-card">
+        <p class="text-custom-muted mb-1">Вы действительно хотите удалить:</p>
+        <h3 class="fw-bold text-main-bright">@Model.Car.Brand @Model.Car.ModelCar</h3>
+
+        <div class="d-flex align-items-center justify-content-center mb-4">
+            <i class="bi bi-person text-primary me-2"></i>
+            <span class="small text-custom-muted">Владелец: <strong>@Model.Car.Client.FullName</strong></span>
+        </div>
+
+        <form method="post">
+            <input type="hidden" asp-for="Car.Id" />
+
+            <button type="submit" class="btn btn-danger w-100 py-3 fw-bold mb-3 shadow-sm rounded-pill btn-delete-confirm">
+                <i class="bi bi-trash3 me-2"></i>Подтвердить удаление
+            </button>
+
+            <div class="text-center">
+                <a asp-page="./Index" class="text-custom-muted small text-decoration-none">
+                    <i class="bi bi-arrow-left me-1"></i>Отмена
+                </a>
+            </div>
+        </form>
+    </div>
 </div>
-
-<form method="post">
-    <input type="hidden" asp-for="Car.Id" />
-    <button type="submit">Удалить</button>
-</form>
-
-<a asp-page="Index">Отмена</a>

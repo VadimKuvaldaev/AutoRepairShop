@@ -2,6 +2,7 @@ using AutoRepairShop.Data;
 using AutoRepairShop.Model;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 
 namespace AutoRepairShop.Pages.Cars
 {
@@ -17,9 +18,14 @@ namespace AutoRepairShop.Pages.Cars
         [BindProperty]
         public Car Car { get; set; }
 
-        public IActionResult OnGet(int id)
+        public IActionResult OnGet(int? id)
         {
-            Car = _context.Cars.Find(id);
+            if (id == null)
+                return NotFound();
+            
+            Car = _context.Cars
+                .Include(c => c.Client)
+                .FirstOrDefault(m => m.Id == id);
 
             if (Car == null)
                 return NotFound();
@@ -29,11 +35,11 @@ namespace AutoRepairShop.Pages.Cars
 
         public IActionResult OnPost()
         {
-            var car = _context.Cars.Find(Car.Id);
+            var carToDelete = _context.Cars.Find(Car.Id);
 
-            if (car != null)
+            if (carToDelete != null)
             {
-                _context.Cars.Remove(car);
+                _context.Cars.Remove(carToDelete);
                 _context.SaveChanges();
             }
 

@@ -1,17 +1,115 @@
-﻿@page "{id:int}"
+﻿@page
 @model AutoRepairShop.Pages.Cars.DetailsModel
 @{
+    ViewData["Title"] = "Профиль автомобиля";
 }
-<h1>Информация о автомобилях</h1>
 
-<div>
-    <p><strong>Марка:</strong> @Model.Car.Brand</p>
-    <p><strong>Модель:</strong> @Model.Car.ModelCar</p>
-    <p><strong>Номер модели:</strong> @Model.Car.ModelID</p>
-    <p><strong>Год:</strong> @Model.Car.Year</p>
-    <p><strong>Владелец:</strong> @Model.Car.Owner</p>
+<style>
+    .details-card {
+        background-color: #ffffff !important;
+        border: 1px solid rgba(0,0,0,0.08) !important;
+        border-radius: 15px;
+        overflow: hidden;
+        max-width: 600px;
+    }
+
+    .details-header {
+        background: #0d6efd;
+        color: white;
+        padding: 1.5rem;
+    }
+
+    .info-row {
+        border-bottom: 1px solid rgba(0,0,0,0.05);
+        padding: 12px 0;
+    }
+
+    .id-badge {
+        background-color: #f8f9fa;
+        color: #212529;
+        border: 1px solid #dee2e6;
+        padding: 0.35em 0.65em;
+        font-size: 0.85em;
+        border-radius: 50rem;
+    }
+
+    .footer-actions {
+        background-color: #f8f9fa;
+        border-top: 1px solid rgba(0,0,0,0.05);
+    }
+
+    [data-theme="dark"] .details-card {
+        background-color: #1e1e1e !important;
+        border-color: rgba(255,255,255,0.1) !important;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.4) !important;
+    }
+
+    [data-theme="dark"] .info-row {
+        border-color: rgba(255,255,255,0.05);
+    }
+
+    [data-theme="dark"] .id-badge {
+        background-color: rgba(255, 255, 255, 0.1) !important;
+        color: #f8f9fa !important;
+        border-color: rgba(255, 255, 255, 0.2) !important;
+    }
+
+    [data-theme="dark"] .footer-actions {
+        background-color: rgba(0,0,0,0.2);
+    }
+
+    .text-main-bright {
+        color: #212529;
+    }
+
+    [data-theme="dark"] .text-main-bright {
+        color: #f8f9fa !important;
+    }
+
+    .text-custom-muted {
+        color: #6c757d;
+    }
+
+    [data-theme="dark"] .text-custom-muted {
+        color: #adb5bd;
+    }
+</style>
+
+<div class="container mt-5 d-flex justify-content-center">
+    <div class="card shadow-sm w-100 details-card">
+        <div class="details-header text-center">
+            <h4 class="mb-0 fw-bold"><i class="bi bi-info-circle me-2"></i>Информация об авто</h4>
+        </div>
+
+        <div class="card-body p-4">
+            <div class="text-center mb-4 pb-3 border-bottom border-opacity-10">
+                <div class="bg-primary bg-opacity-10 text-primary d-inline-block p-3 rounded-circle mb-3">
+                    <i class="bi bi-car-front-fill display-6"></i>
+                </div>
+                <h2 class="fw-bold text-main-bright mb-1">@Model.Car.Brand @Model.Car.ModelCar</h2>
+                <span class="badge bg-secondary rounded-pill">@Model.Car.Year год выпуска</span>
+            </div>
+
+            <div class="info-row d-flex justify-content-between align-items-center">
+                <span class="text-custom-muted small text-uppercase fw-bold">Владелец</span>
+                <span class="fw-bold text-main-bright">
+                    <i class="bi bi-person me-1 text-primary"></i>@Model.Car.Client.FullName
+                </span>
+            </div>
+
+            <div class="info-row d-flex justify-content-between align-items-center">
+                <span class="text-custom-muted small text-uppercase fw-bold">Системный ID</span>
+                <span class="id-badge">#@Model.Car.Id</span>
+            </div>
+        </div>
+
+        <div class="footer-actions p-3 d-flex gap-2">
+            <a asp-page="./Edit" asp-route-id="@Model.Car.Id" class="btn btn-warning flex-grow-1 fw-bold shadow-sm rounded-pill">
+                <i class="bi bi-pencil-square me-1"></i> Изменить
+            </a>
+            <a asp-page="./Index" class="btn btn-outline-secondary flex-grow-1 rounded-pill">
+                <i class="bi bi-arrow-left me-1"></i> К списку
+            </a>
+        </div>
+    </div>
 </div>
-
-<p>
-    <a asp-page="Index">Назад к списку</a>
-</p>

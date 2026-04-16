@@ -1,26 +1,106 @@
 ﻿@page
 @model AutoRepairShop.Pages.Clients.CreateModel
 @{
+    ViewData["Title"] = "Новый клиент";
 }
-<h1>Добавить клиента</h1>
 
-<form method="post">
-    <div>
-        <label>Фамилия и имя</label><br />
-        <input asp-for="Client.FullName" />
+<style>
+    .create-card {
+        background-color: #ffffff !important;
+        border: 1px solid rgba(0,0,0,0.08) !important;
+        border-top: 5px solid #0d6efd !important; 
+        border-radius: 15px;
+        transition: all 0.3s ease;
+    }
+
+    .input-group-text {
+        background-color: #f8f9fa !important;
+        border-color: #dee2e6 !important;
+        color: #6c757d;
+        transition: all 0.3s ease;
+    }
+
+    .form-control {
+        background-color: #ffffff !important;
+        border-color: #dee2e6 !important;
+        color: #212529 !important;
+    }
+
+    [data-theme="dark"] .create-card {
+        background-color: #1e1e1e !important;
+        border-color: rgba(255,255,255,0.1) !important;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.4) !important;
+    }
+
+    [data-theme="dark"] .input-group-text {
+        background-color: #2b2b2b !important;
+        border-color: rgba(255,255,255,0.1) !important;
+        color: #adb5bd;
+    }
+
+    [data-theme="dark"] .form-control {
+        background-color: #252525 !important;
+        border-color: rgba(255,255,255,0.1) !important;
+        color: #f8f9fa !important;
+    }
+
+        [data-theme="dark"] .form-control::placeholder {
+            color: #6c757d;
+        }
+
+    .text-custom-muted {
+        color: #6c757d;
+    }
+
+    [data-theme="dark"] .text-custom-muted {
+        color: #adb5bd;
+    }
+</style>
+
+<div class="container d-flex flex-column align-items-center justify-content-center mt-5">
+    <div class="text-center mb-4">
+        <i class="bi bi-person-plus text-primary display-1"></i>
+        <h1 class="mt-3 fw-bold">Регистрация клиента</h1>
     </div>
 
-    <div>
-        <label>Номер телефона</label><br />
-        <input asp-for="Client.NumberPhone" />
+    <div class="card shadow-sm p-4 w-100 create-card" style="max-width: 500px;">
+        <form method="post">
+            <div asp-validation-summary="All" class="text-danger mb-3 small"></div>
+
+            <div class="mb-3">
+                <label class="form-label text-custom-muted small fw-bold text-uppercase">Полное имя</label>
+                <div class="input-group">
+                    <span class="input-group-text border-end-0"><i class="bi bi-person"></i></span>
+                    <input asp-for="Client.FullName" class="form-control border-start-0" placeholder="Иванов Иван Иванович" />
+                </div>
+                <span asp-validation-for="Client.FullName" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label text-custom-muted small fw-bold text-uppercase">Телефон</label>
+                <div class="input-group">
+                    <span class="input-group-text border-end-0"><i class="bi bi-telephone"></i></span>
+                    <input asp-for="Client.NumberPhone" class="form-control border-start-0" placeholder="+7 (999) 000-00-00" />
+                </div>
+                <span asp-validation-for="Client.NumberPhone" class="text-danger"></span>
+            </div>
+
+            <div class="mb-4">
+                <label class="form-label text-custom-muted small fw-bold text-uppercase">Электронная почта</label>
+                <div class="input-group">
+                    <span class="input-group-text border-end-0"><i class="bi bi-envelope"></i></span>
+                    <input asp-for="Client.Email" class="form-control border-start-0" placeholder="example@mail.com" />
+                </div>
+                <span asp-validation-for="Client.Email" class="text-danger"></span>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100 py-2 fw-bold shadow-sm">Создать клиента</button>
+
+            <div class="text-center mt-3">
+                <a asp-page="./Index" class="text-custom-muted small text-decoration-none">
+                    <i class="bi bi-arrow-left me-1"></i>Вернуться к списку
+                </a>
+            </div>
+        </form>
     </div>
-
-    <div>
-        <label>Email</label><br />
-        <input asp-for="Client.Email" />
-    </div>    
-
-    <button type="submit">Сохранить</button>
-</form>
-
-
+</div>
