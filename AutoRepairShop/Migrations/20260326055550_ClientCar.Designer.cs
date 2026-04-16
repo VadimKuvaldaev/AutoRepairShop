@@ -3,6 +3,7 @@ using AutoRepairShop.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AutoRepairShop.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260326055550_ClientCar")]
+    partial class ClientCar
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -20,6 +23,23 @@ namespace AutoRepairShop.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("AutoRepairShop.Model.BrandCar", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("BrandCars");
+                });
 
             modelBuilder.Entity("AutoRepairShop.Model.Car", b =>
                 {
@@ -29,11 +49,13 @@ namespace AutoRepairShop.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Brand")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("BrandId")
+                        .HasColumnType("int");
 
-                    b.Property<int>("ClientId")
+                    b.Property<int?>("ClientId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ClientId1")
                         .HasColumnType("int");
 
                     b.Property<string>("ModelCar")
@@ -49,7 +71,11 @@ namespace AutoRepairShop.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("BrandId");
+
                     b.HasIndex("ClientId");
+
+                    b.HasIndex("ClientId1");
 
                     b.ToTable("Cars");
                 });
@@ -75,8 +101,8 @@ namespace AutoRepairShop.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("NumberPhone")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("NumberPhone")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -99,16 +125,28 @@ namespace AutoRepairShop.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ClientCars");
+                    b.ToTable("ClientCar");
                 });
 
             modelBuilder.Entity("AutoRepairShop.Model.Car", b =>
                 {
-                    b.HasOne("AutoRepairShop.Model.Client", "Client")
+                    b.HasOne("AutoRepairShop.Model.BrandCar", "Brand")
                         .WithMany("Cars")
-                        .HasForeignKey("ClientId")
+                        .HasForeignKey("BrandId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("AutoRepairShop.Model.Client", null)
+                        .WithMany("Cars")
+                        .HasForeignKey("ClientId");
+
+                    b.HasOne("AutoRepairShop.Model.ClientCar", "Client")
+                        .WithMany()
+                        .HasForeignKey("ClientId1")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Brand");
 
                     b.Navigation("Client");
                 });
@@ -118,6 +156,11 @@ namespace AutoRepairShop.Migrations
                     b.HasOne("AutoRepairShop.Model.ClientCar", null)
                         .WithMany("Clients")
                         .HasForeignKey("ClientCarId");
+                });
+
+            modelBuilder.Entity("AutoRepairShop.Model.BrandCar", b =>
+                {
+                    b.Navigation("Cars");
                 });
 
             modelBuilder.Entity("AutoRepairShop.Model.Client", b =>

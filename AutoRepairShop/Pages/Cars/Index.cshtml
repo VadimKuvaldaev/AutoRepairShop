@@ -1,0 +1,104 @@
+﻿@page
+@model AutoRepairShop.Pages.Cars.IndexModel
+@{
+    ViewData["Title"] = "Автопарк";
+}
+
+<style>
+    .auto-card, .owner-section, .btn {
+        transition: all 0.3s ease;
+    }
+
+    .auto-card {
+        background-color: #ffffff !important;
+        color: #212529 !important;
+        border: 1px solid rgba(0,0,0,0.08) !important;
+        border-radius: 20px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+
+    .owner-section {
+        background-color: #f8f9fa;
+        border: 1px solid rgba(0,0,0,0.05);
+        border-radius: 12px;
+    }
+
+    [data-theme="dark"] .auto-card {
+        background-color: #1e1e1e !important;
+        color: #f8f9fa !important;
+        border: 1px solid rgba(255,255,255,0.1) !important;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    }
+
+    [data-theme="dark"] .owner-section {
+        background-color: rgba(255,255,255,0.03);
+        border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .text-custom-muted {
+        color: #6c757d;
+    }
+
+    [data-theme="dark"] .text-custom-muted {
+        color: #adb5bd;
+    }
+
+    .car-icon-bg {
+        background-color: rgba(13, 110, 253, 0.1);
+        color: #0d6efd;
+    }
+</style>
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="fw-bold">Автопарк</h1>
+        <a asp-page="Create" class="btn btn-primary shadow-sm fw-bold">
+            <i class="bi bi-plus-lg me-1"></i> Добавить авто
+        </a>
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        @if (Model.Cars != null)
+        {
+            @foreach (var item in Model.Cars)
+            {
+                <div class="col">
+                    <div class="card h-100 auto-card border-0">
+                        <div class="card-body p-4">
+                            <div class="d-flex align-items-center mb-3">                                
+                                <div>
+                                    <h5 class="mb-0 fw-bold">@item.Brand</h5>
+                                    <p class="text-custom-muted mb-0 small">@item.ModelCar</p>
+                                </div>
+                            </div>
+
+                            <div class="p-3 mb-4 owner-section">
+                                <p class="text-uppercase fw-bold text-custom-muted mb-2" style="font-size: 0.65rem; letter-spacing: 1px;">
+                                    Владелец
+                                </p>
+                                <div class="d-flex align-items-center">
+                                    <div class="car-icon-bg rounded-circle p-2 me-2 d-flex align-items-center justify-content-center"
+                                         style="width: 32px; height: 32px;">
+                                        <i class="bi bi-person-fill" style="font-size: 0.9rem;"></i>
+                                        👤
+                                    </div>
+                                    <span class="fw-medium">@item.Client?.FullName</span>
+                                </div>
+                            </div>
+
+                            <div class="d-grid gap-2">
+                                <a asp-page="./Details" asp-route-id="@item.Id" class="btn btn-primary rounded-pill fw-bold py-2 shadow-sm">
+                                    Детали и история
+                                </a>
+                                <div class="d-flex gap-2">
+                                    <a asp-page="./Edit" asp-route-id="@item.Id" class="btn btn-outline-warning w-50 rounded-pill fw-bold">Изменить</a>
+                                    <a asp-page="./Delete" asp-route-id="@item.Id" class="btn btn-outline-danger w-50 rounded-pill fw-bold">Удалить</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</div>

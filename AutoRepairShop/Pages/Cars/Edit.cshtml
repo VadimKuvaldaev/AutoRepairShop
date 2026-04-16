@@ -1,0 +1,151 @@
+﻿@page "{id:int}"
+@model AutoRepairShop.Pages.Cars.EditModel
+@{
+    ViewData["Title"] = "Редактирование автомобиля";
+}
+
+<style>
+    .edit-card {
+        background-color: #ffffff !important;
+        border: 1px solid rgba(0,0,0,0.08) !important;
+        border-top: 5px solid #ffc107 !important; 
+        border-radius: 15px;
+    }
+
+    .form-label-custom {
+        color: #6c757d;
+        font-size: 0.75rem;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .input-group-text {
+        background-color: #f8f9fa;
+        border-color: #dee2e6;
+        color: #ffc107; 
+    }
+
+    .form-control, .form-select {
+        border-color: #dee2e6;
+    }
+
+        .form-control:focus, .form-select:focus {
+            border-color: #ffc107;
+            box-shadow: 0 0 0 0.25rem rgba(255, 193, 7, 0.1);
+        }
+
+    [data-theme="dark"] .edit-card {
+        background-color: #1e1e1e !important;
+        border-color: rgba(255,255,255,0.1) !important;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.4) !important;
+    }
+
+    [data-theme="dark"] .input-group-text {
+        background-color: rgba(255,255,255,0.05);
+        border-color: rgba(255,255,255,0.1);
+        color: #ffc107;
+    }
+
+    [data-theme="dark"] .form-control, [data-theme="dark"] .form-select {
+        background-color: rgba(255,255,255,0.02);
+        border-color: rgba(255,255,255,0.1);
+        color: #f8f9fa;
+    }
+
+    [data-theme="dark"] .form-label-custom {
+        color: #adb5bd;
+    }
+
+    [data-theme="dark"] .text-main-bright {
+        color: #f8f9fa !important;
+    }
+
+    .text-custom-muted {
+        color: #6c757d;
+    }
+
+    [data-theme="dark"] .text-custom-muted {
+        color: #adb5bd;
+    }
+</style>
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+
+            <div class="mb-4 text-center">
+                <h2 class="fw-bold text-main-bright">Редактирование автомобиля</h2>
+                <p class="text-custom-muted">Обновите технические данные транспортного средства</p>
+            </div>
+
+            <div class="card shadow-sm edit-card">
+                <div class="card-body p-4 p-md-5">
+                    <form method="post">
+                        <input type="hidden" asp-for="Car.Id" />
+
+                        <div class="row">
+                            <div class="col-md-7 mb-4">
+                                <label asp-for="Car.Brand" class="form-label form-label-custom">Марка</label>
+                                <div class="input-group">
+                                    <span class="input-group-text border-end-0"><i class="bi bi-tag"></i></span>
+                                    <input asp-for="Car.Brand" class="form-control border-start-0" placeholder="Например: Toyota" />
+                                </div>
+                                <span asp-validation-for="Car.Brand" class="text-danger small"></span>
+                            </div>
+
+                            <div class="col-md-5 mb-4">
+                                <label asp-for="Car.Year" class="form-label form-label-custom">Год выпуска</label>
+                                <div class="input-group">
+                                    <span class="input-group-text border-end-0"><i class="bi bi-calendar-event"></i></span>
+                                    <input asp-for="Car.Year" type="number" class="form-control border-start-0" placeholder="2020" />
+                                </div>
+                                <span asp-validation-for="Car.Year" class="text-danger small"></span>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label asp-for="Car.ModelCar" class="form-label form-label-custom">Модель</label>
+                            <div class="input-group">
+                                <span class="input-group-text border-end-0"><i class="bi bi-car-front"></i></span>
+                                <input asp-for="Car.ModelCar" class="form-control border-start-0" placeholder="Например: Camry" />
+                            </div>
+                            <span asp-validation-for="Car.ModelCar" class="text-danger small"></span>
+                        </div>
+
+                        <div class="mb-4">
+                            <label asp-for="Car.ClientId" class="form-label form-label-custom">Владелец</label>
+                            <div class="input-group">
+                                <span class="input-group-text border-end-0"><i class="bi bi-person"></i></span>
+                                <select asp-for="Car.ClientId" asp-items="Model.ClientList" class="form-select border-start-0">
+                                    <option value="">-- Выберите владельца --</option>
+                                </select>
+                            </div>
+                            <span asp-validation-for="Car.ClientId" class="text-danger small d-block mt-1"></span>
+                        </div>
+
+                        <div class="d-grid gap-2 mt-5">
+                            <button type="submit" class="btn btn-warning btn-lg shadow-sm fw-bold py-3 rounded-pill">
+                                <i class="bi bi-check2-circle me-1"></i> Сохранить изменения
+                            </button>
+                            <a asp-page="Index" class="text-custom-muted text-decoration-none small text-center mt-2">
+                                <i class="bi bi-arrow-left me-1"></i> Отмена (Вернуться к списку)
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="text-center mt-3">
+                <span class="badge bg-light text-secondary border fw-normal py-2 px-3 rounded-pill">
+                    ID автомобиля: #@Model.Car.Id
+                </span>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

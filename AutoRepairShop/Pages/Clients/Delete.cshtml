@@ -1,0 +1,82 @@
+﻿@page
+@model AutoRepairShop.Pages.Clients.DeleteModel
+@{
+    ViewData["Title"] = "Удаление клиента";
+}
+
+<style>
+    .delete-card {
+        background-color: #ffffff !important;
+        border: 1px solid rgba(0,0,0,0.08) !important;
+        border-top: 5px solid #dc3545 !important; 
+        border-radius: 15px;
+        transition: all 0.3s ease;
+    }
+
+    .warning-box {
+        background-color: #fff3cd; 
+        border: 1px solid #ffeeba;
+        color: #856404;
+        border-radius: 12px;
+    }
+
+    [data-theme="dark"] .delete-card {
+        background-color: #1e1e1e !important;
+        border-color: rgba(255,255,255,0.1) !important;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.4) !important;
+    }
+
+    [data-theme="dark"] .warning-box {
+        background-color: rgba(255, 193, 7, 0.05) !important; 
+        border-color: rgba(255, 193, 7, 0.2) !important;
+        color: #ffc107 !important;
+    }
+
+    .text-custom-muted {
+        color: #6c757d;
+    }
+
+    [data-theme="dark"] .text-custom-muted {
+        color: #adb5bd;
+    }
+
+    [data-theme="dark"] .text-main-bright {
+        color: #f8f9fa !important;
+    }
+</style>
+
+<div class="container d-flex flex-column align-items-center justify-content-center mt-5">
+    <div class="text-center mb-4">
+        <i class="bi bi-trash3 text-danger display-1 opacity-25"></i>
+        <h1 class="mt-2 fw-bold text-main-bright">Удаление профиля</h1>
+        <p class="text-custom-muted">Это действие нельзя будет отменить</p>
+    </div>
+
+    <div class="card shadow-sm p-4 w-100 text-center delete-card" style="max-width: 500px;">
+        <p class="text-custom-muted mb-1">Вы собираетесь безвозвратно удалить клиента:</p>
+        <h2 class="fw-bold mb-4 text-main-bright">@Model.Client.FullName</h2>
+
+        <div class="warning-box d-flex align-items-center text-start py-3 mb-4 px-3" style="font-size: 0.9rem;">
+            <i class="bi bi-exclamation-triangle-fill fs-4 me-3 text-danger"></i>
+            <div>
+                <strong>Внимание:</strong> Все связанные данные, включая историю обращений и привязанные автомобили, станут недоступны.
+            </div>
+        </div>
+
+        <form method="post">
+            <input type="hidden" asp-for="Client.Id" />
+            <button type="submit" class="btn btn-danger w-100 py-3 fw-bold mb-3 shadow-sm">
+                <i class="bi bi-trash me-2"></i>Да, удалить клиента
+            </button>
+            <div class="text-center">
+                <a asp-page="./Index" class="text-custom-muted small text-decoration-none">
+                    <i class="bi bi-arrow-left me-1"></i>Нет, я передумал (Вернуться)
+                </a>
+            </div>
+        </form>
+    </div>
+
+    <p class="text-custom-muted mt-4 small">
+        Системный идентификатор записи: <span class="text-danger fw-bold">#@Model.Client.Id</span>
+    </p>
+</div>
