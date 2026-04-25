@@ -17,7 +17,7 @@ namespace AutoRepairShop.Model
         public int Year { get; set; }
 
         [Required(ErrorMessage = "Необходимо выбрать владельца")]
-        public int ClientId { get; set; }
+        public int? ClientId { get; set; }
         public Client? Client { get; set; } 
     }
 }
