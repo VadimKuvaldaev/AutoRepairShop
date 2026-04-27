@@ -13,7 +13,7 @@ namespace AutoRepairShop.Model
         public string ModelCar { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Введите год выпуска автомобиля")]
-        [Range(1900, 2026, ErrorMessage = "Год выпуска должен быть между 1886 и 2026")]
+        [Range(1900, 2026, ErrorMessage = "Год выпуска должен быть между 1900 и 2026")]
         public int Year { get; set; }
 
         [Required(ErrorMessage = "Необходимо выбрать владельца")]
