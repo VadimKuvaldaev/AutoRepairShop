@@ -16,19 +16,18 @@
 
                         <div class="mb-3">
                             <label asp-for="User.Email" class="form-label fw-semibold">Email адрес</label>
-                            <input asp-for="User.Email" class="form-control" />
+                            <input asp-for="User.Email" class="form-control" placeholder="name@example.com" required />
                             <span asp-validation-for="User.Email" class="text-danger small"></span>
                         </div>
 
                         <div class="mb-3">
-                            <label asp-for="User.Password" class="form-label fw-semibold">Пароль</label>
-                            <input asp-for="User.Password" type="password" class="form-control" />
-                            <span asp-validation-for="User.Password" class="text-danger small"></span>
+                            <label for="NewPassword" class="form-label fw-semibold">Новый пароль</label>
+                            <input type="password" id="NewPassword" name="NewPassword" class="form-control" placeholder="Оставьте пустым, чтобы не изменять" />
                         </div>
 
                         <div class="mb-4">
                             <label asp-for="User.Role" class="form-label fw-semibold">Роль доступа</label>
-                            <select asp-for="User.Role" class="form-select">
+                            <select asp-for="User.Role" class="form-select" required>
                                 <option value="User">User</option>
                                 <option value="Admin">Admin</option>
                             </select>
