@@ -24,6 +24,28 @@
             --border-color: rgba(255,255,255,0.1);
         }
 
+            /* Адаптация элементов формы под темную тему */
+            [data-theme="dark"] .form-label {
+                color: #f8f9fa !important;
+            }
+
+            [data-theme="dark"] .form-control,
+            [data-theme="dark"] .form-select {
+                background-color: #2b2b2b !important;
+                color: #f8f9fa !important;
+                border-color: #444444 !important;
+            }
+
+                [data-theme="dark"] .form-control::placeholder {
+                    color: #a0a0a0 !important;
+                    opacity: 1;
+                }
+
+            [data-theme="dark"] .card {
+                background-color: #1e1e1e !important;
+                border-color: rgba(255,255,255,0.1) !important;
+            }
+
         html, body {
             height: 100%;
         }
@@ -87,11 +109,45 @@
                         <li class="nav-item"><a class="nav-link" asp-page="/Index">Главная</a></li>
                         <li class="nav-item"><a class="nav-link" asp-page="/Cars/Index">Автомобили</a></li>
                         <li class="nav-item"><a class="nav-link" asp-page="/Clients/Index">Клиенты</a></li>
+
+                        @* Вкладка открыта для проверки. Как только убедимся, что работает — закроем её под админа *@
+                        @if (User.Identity?.IsAuthenticated == true)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-danger fw-bold" asp-page="/Account/User/Index">Пользователи</a>
+                            </li>
+                        }
                     </ul>
-                    <div class="form-check form-switch ms-auto">
-                        <input class="form-check-input" type="checkbox" id="themeToggle" style="cursor:pointer;">
-                        <label class="form-check-label ms-1" for="themeToggle" id="themeIcon">☀️</label>
-                    </div>
+
+                    <ul class="navbar-nav ms-auto d-flex align-items-center gap-3">
+                        @if (User.Identity?.IsAuthenticated == true)
+                        {
+                            <li class="nav-item d-flex align-items-center">
+                                <a asp-page="/Account/Profile" class="text-decoration-none fw-bold me-2" style="color: var(--text-main);">
+                                    👤 @User.Identity.Name
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="btn btn-sm btn-outline-danger rounded-pill px-3" asp-page="/Account/Logout">Выход</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="btn btn-sm btn-outline-primary rounded-pill px-3" asp-page="/Account/Login">Вход</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="btn btn-sm btn-primary rounded-pill px-3" asp-page="/Account/Register">Регистрация</a>
+                            </li>
+                        }
+
+                        <li class="nav-item ms-2">
+                            <div class="form-check form-switch m-0">
+                                <input class="form-check-input" type="checkbox" id="themeToggle" style="cursor:pointer;">
+                                <label class="form-check-label ms-1" for="themeToggle" id="themeIcon">☀️</label>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </nav>
@@ -126,14 +182,16 @@
         const setTheme = (theme) => {
             html.setAttribute('data-theme', theme);
             localStorage.setItem('theme', theme);
-            toggle.checked = theme === 'dark';
-            icon.textContent = theme === 'dark' ? '🌙' : '☀️';
+            if (toggle) toggle.checked = theme === 'dark';
+            if (icon) icon.textContent = theme === 'dark' ? '🌙' : '☀️';
         };
 
         const current = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         setTheme(current);
 
-        toggle.addEventListener('change', () => setTheme(toggle.checked ? 'dark' : 'light'));
+        if (toggle) {
+            toggle.addEventListener('change', () => setTheme(toggle.checked ? 'dark' : 'light'));
+        }
     </script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
