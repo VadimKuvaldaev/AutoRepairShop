@@ -1,4 +1,6 @@
-﻿namespace AutoRepairShop.Model
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace AutoRepairShop.Model
 {
     public class EFModel
     {

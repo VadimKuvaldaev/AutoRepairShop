@@ -1,5 +1,7 @@
 ﻿using AutoRepairShop.Model;
 using Microsoft.EntityFrameworkCore;
+using AutoRepairShop.Model.AuthApp;
+
 
 namespace AutoRepairShop.Data
 {
@@ -8,5 +10,6 @@ namespace AutoRepairShop.Data
         public DbSet<Car> Cars { get; set; }
         public DbSet<Client> Clients { get; set; }       
         public DbSet<ClientCar> ClientCars { get; set; }
+        public DbSet<AuthUser> AuthUsers { get; set; }
     }
 }
