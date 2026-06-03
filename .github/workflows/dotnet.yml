@@ -16,13 +16,17 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+    
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: 8.0.x
+        dotnet-version: 9.0.x 
+
     - name: Restore dependencies
-      run: dotnet restore AutoRepairShop/AutoRepairShop.csproj
+      run: dotnet restore
+
     - name: Build
-      run: dotnet build AutoRepairShop/AutoRepairShop.csproj --no-restore
+      run: dotnet build --no-restore
+
     - name: Test
-      run: dotnet test AutoRepairShop.Test/AutoRepairShop.Test.csproj --no-build --verbosity normal
+      run: dotnet test --no-build --verbosity normal
